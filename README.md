@@ -9,12 +9,22 @@
  * oh-my-zsh (https://github.com/robbyrussell/oh-my-zsh)
  * yadr (https://github.com/skwp/dotfiles)
 
+#### Install dotfiles
 ```shell
- cd $HOME
- git clone clone https://github.com/KlotzAndrew/dotfiles.git
- cd $HOME/dotfiles
+ git clone https://github.com/KlotzAndrew/dotfiles.git ~/dotfiles
+ cd ~/dotfiles
  rake install
 ```
 
-TODO:
-script some of this when I have to do it again
+#### Atom setup
+
+Install Atom then:
+
+```shell
+git clone https://github.com/KlotzAndrew/atom-config.git ~/temp-atom-config
+cd ~/temp-atom-config
+mv ~/temp-atom-config/.git ~/.atom
+rm -rf ~/temp-atom-config
+cd ~/.atom
+git checkout --force master
+```
