@@ -1,19 +1,13 @@
 # dotfiles
 
-#### Up and running mostly use maintained repos:
-
- * zsh
- * `chsh -s $(which zsh)`
- * vim
- * tmux
- * oh-my-zsh (https://github.com/robbyrussell/oh-my-zsh)
- * yadr (https://github.com/skwp/dotfiles)
-
-#### Install dotfiles
+#### Getting up and running
 ```shell
- git clone https://github.com/KlotzAndrew/dotfiles.git ~/dotfiles
- cd ~/dotfiles
- rake install
+git clone https://github.com/KlotzAndrew/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+sh setup.sh
+
+# install dotfiles
+rake install --trace
 ```
 
 #### Atom setup
@@ -27,4 +21,9 @@ mv ~/temp-atom-config/.git ~/.atom
 rm -rf ~/temp-atom-config
 cd ~/.atom
 git checkout --force master
+```
+
+#### Languages:
+```shell
+sh languages/ruby.sh # installed by default
 ```
