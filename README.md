@@ -26,4 +26,5 @@ git checkout --force master
 #### Languages:
 ```shell
 sh languages/ruby.sh # installed by default
+sh languages/nodejs.sh
 ```
