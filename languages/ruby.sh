@@ -16,5 +16,8 @@ rvm install 2.3.3
 rvm install 2.4.0
 rvm --default use 2.4.0
 
-gem install bundler
+rvm all do gem install bundler
+rvm all do gem install irbtools
+rvm all do gem install awesome_print
+rvm all do gem install rubocop
 
