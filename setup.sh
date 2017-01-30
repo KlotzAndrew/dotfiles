@@ -2,6 +2,10 @@
 
 set -ex
 
+# osx setup...
+brew update
+brew install shellcheck
+
 # need ruby for scripting
 sh languages/ruby.sh
 
