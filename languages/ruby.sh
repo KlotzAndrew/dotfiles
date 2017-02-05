@@ -20,4 +20,5 @@ rvm all do gem install bundler
 rvm all do gem install irbtools
 rvm all do gem install awesome_print
 rvm all do gem install rubocop
+rvm all do gem install reek
 
