@@ -92,6 +92,10 @@ def local_methods(obj = self)
   (obj.methods - obj.class.superclass.instance_methods).sort
 end
 
+def source_location(obj_method, obj = self)
+  obj.method(obj_method).source_location
+end
+
 # === COLOR CUSTOMIZATION ===
 # Everything below this line is for customizing colors, you have to use the ugly
 # color codes, but such is life.
