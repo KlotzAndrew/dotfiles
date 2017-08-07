@@ -30,3 +30,8 @@ sh languages/nodejs.sh
 sh languages/elixir.sh
 sh languages/go.sh
 ```
+
+#### Vars
+```bash
+export DOTOKEN=xxxxx
+```
