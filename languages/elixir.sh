@@ -8,9 +8,9 @@ echo "installing elixir"
 
 kiex list known
 kiex install 1.4.0
+kiex install 1.5.1
 
-kiex default 1.4.0
+kiex default 1.5.1
 
 echo "elixers installed"
 kiex list
-
