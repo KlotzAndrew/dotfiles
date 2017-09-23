@@ -4,7 +4,7 @@
 
 [core]
   autocrlf = false
-  editor = atom
+  editor = vim
 	excludesfile = ~/.gitignore_global
 
 [commit]
