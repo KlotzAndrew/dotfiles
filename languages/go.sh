@@ -16,9 +16,12 @@ gvm use go1.4
 export GOROOT_BOOTSTRAP=$GOROOT
 gvm install go1.5
 
-gvm install go1.7.4
-gvm use go1.7.4 --default
+gvm install go1.9
+gvm use go1.9 --default
 
 echo "installed go"
 gvm list
 
+# set these for new shells
+# export GOPATH=$HOME/code/gowork
+# [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
