@@ -1,1 +1,0 @@
-/Users/dev/.yadr/irb/escaped_colors.rb
