@@ -1,0 +1,28 @@
+#! /bin/bash
+
+# web-dev
+alias web-run='dc-run web '
+alias web-bundle='web-run bundle '
+alias web-rails='web-bundle exec rails '
+alias web-rake='web-bundle exec rake '
+alias web-rspec='web-bundle exec rspec '
+alias web-hanami='web-bundle exec hanami '
+
+# docker
+alias dc='docker-compose '
+alias dc-run='dc run --rm '
+alias dps='docker ps --format "table {{.Names}}\\t{{.Image}}\\t{{.Status}}"'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+alias g="git"
+alias h="history"
