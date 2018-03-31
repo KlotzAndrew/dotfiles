@@ -1,6 +1,7 @@
 [alias]
   alias = !git config -l | grep ^alias | cut -c 7- | sort
   s = status -s
+  d = diff
   ds = diff --staged
 
 [apply]

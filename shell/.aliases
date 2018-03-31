@@ -25,4 +25,5 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 
 alias g="git"
+alias gs="g s" # ghostscript is usually not what I mean
 alias h="history"
