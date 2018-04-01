@@ -118,3 +118,5 @@ export FZF_DEFAULT_OPTS='
   --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
   --color info:254,prompt:37,spinner:108,pointer:235,marker:235
 '
+
+[[ -s "/home/potato/.gvm/scripts/gvm" ]] && source "/home/potato/.gvm/scripts/gvm"
