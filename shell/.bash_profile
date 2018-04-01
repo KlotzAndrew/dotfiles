@@ -1,8 +1,7 @@
 #! /bin/bash
 
-for file in ~/.{bash_prompt,aliases,functions}; do
+for file in ~/.{bash_prompt,aliases,functions,path}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-    echo $file
 		source "$file"
 	fi
 done
