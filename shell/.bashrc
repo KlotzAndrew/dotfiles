@@ -119,4 +119,7 @@ export FZF_DEFAULT_OPTS='
   --color info:254,prompt:37,spinner:108,pointer:235,marker:235
 '
 
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 [[ -s "/home/potato/.gvm/scripts/gvm" ]] && source "/home/potato/.gvm/scripts/gvm"

@@ -2,25 +2,14 @@
 
 set -ex
 
-# osx setup...
-brew update
-brew install shellcheck
-brew install postgresql
-brew install neo4j
-brew install memcached
-brew install redis
-brew install awscli
-brew install youtube-dl
+apt-get update
 
-# just ~/.puma-dev/ instead of ~/pow/
-brew install puma/puma/puma-dev
-puma-dev -install
-sudo puma-dev -setup
+apt-get install vim \
+  vim-gnome \
+  wget
 
-brew cask install slack
 
-# need ruby for scripting
-sh languages/ruby.sh
+snap install rg
 
-# editor stuff
-sh -c "`curl -fsSL https://raw.githubusercontent.com/skwp/dotfiles/master/install.sh`"
+wget https://github.com/sharkdp/fd/releases/download/v7.0.0/fd_7.0.0_amd64.deb
+sudo dpkg -i fd_7.0.0_amd64.deb
