@@ -5,7 +5,7 @@
   ds = diff --staged
 
 [apply]
-  whitespace = warn
+  whitespace = fix
 
 [color "branch"]
 	current = yellow reverse
