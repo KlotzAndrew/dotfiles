@@ -1,5 +1,5 @@
 .PHONY: all
-all: gitfiles shellfiles
+all: gitfiles shellfiles tmux
 
 .PHONY: gitfiles
 gitfiles:
@@ -19,3 +19,7 @@ shellfiles:
 extras:
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	~/.fzf/install
+
+.PHONY: tmux
+tmux:
+	ln -sf $(CURDIR)/.tmux/.tmux.conf $(HOME)/.tmux.conf;
