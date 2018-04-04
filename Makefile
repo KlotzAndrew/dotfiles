@@ -1,5 +1,5 @@
 .PHONY: all
-all: gitfiles shellfiles vim tmux
+all: gitfiles shellfiles vim update tmux
 
 .PHONY: gitfiles
 gitfiles:
@@ -21,8 +21,8 @@ extras:
 	~/.fzf/install
 
 .PHONY: vim
-install:
-	ln -sf "$(CURDIR)/.vim/vimrc" "$(HOME)/.vimrc"
+vim:
+	ln -sf "$(CURDIR)/.vim/" "$(HOME)"
 
 .PHONY: tmux
 tmux:
@@ -31,4 +31,4 @@ tmux:
 .PHONY: update
 update:
 	git submodule update --init --recursive
-	git submodule foreach git pull --recursive-submodules origin master
+	git submodule foreach git pull origin master
