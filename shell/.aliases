@@ -13,10 +13,19 @@ alias dc='docker-compose '
 alias dc-run='dc run --rm '
 alias dps='docker ps --format "table {{.Names}}\\t{{.Image}}\\t{{.Status}}"'
 
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ls='command ls ${colorflag}'
+alias ll='ls -alF ${colorflag}'
+alias la='ls -A ${colorflag}'
+alias l='ls -CF ${colorflag}'
+alias lsd='ls -lF ${colorflag} | grep --color=never '^d''
 
 alias ..="cd .."
 alias ...="cd ../.."
