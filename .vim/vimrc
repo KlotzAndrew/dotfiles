@@ -24,6 +24,11 @@ set autoindent
 set wrap
 set linebreak
 
+let mapleader = ","
+
+nmap <leader>l :set list!<CR>
+set listchars=space:.,tab:▸\ ,eol:¬
+
 " Search
 set incsearch   " Find match as we type
 set hlsearch    " Highlight match
@@ -64,6 +69,7 @@ let g:airline_solarized_bg='dark'
 "==================== NerdTree ====================
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.git$']
 
 "open when no files specified
 autocmd StdinReadPre * let s:std_in=1
