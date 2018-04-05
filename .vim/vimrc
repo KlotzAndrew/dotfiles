@@ -16,7 +16,9 @@ set expandtab
 set smarttab
 set autoindent
 
+syntax enable
 set background=dark
+colorscheme solarized
 
 "===== better splits
 nnoremap <C-J> <C-W><C-J>
