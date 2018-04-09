@@ -1,3 +1,5 @@
+XDG_CONFIG_HOME := $(HOME)/.config
+
 .PHONY: all
 all: gitfiles shellfiles vim update tmux
 
@@ -22,7 +24,15 @@ extras:
 
 .PHONY: vim
 vim:
-	ln -sf "$(CURDIR)/.vim/" "$(HOME)"
+	mkdir -p "$(XDG_CONFIG_HOME)"
+	ln -snf "$(CURDIR)/.vim/vimrc" "$(HOME)/.vimrc"
+	ln -snf "$(CURDIR)/.vim" "$(XDG_CONFIG_HOME)/nvim"
+	ln -snf "$(CURDIR)/.vim/vimrc" "$(XDG_CONFIG_HOME)/nvim/init.vim"
+	sudo mkdir -p /root/.config
+	sudo ln -snf "$(CURDIR)/.vim" /root/.vim
+	sudo ln -snf "$(CURDIR)/.vim/vimrc" /root/.vimrc
+	sudo ln -snf "$(CURDIR)/.vim" /root/.config/nvim
+	sudo ls -snf "$(CURDIR)/.vim/vimrc" /root/.config/nvim/init.vim
 
 .PHONY: tmux
 tmux:

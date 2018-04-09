@@ -8,6 +8,8 @@ done
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+export EDITOR=/usr/bin/nvim
+
 # fzf solarized dark
 export FZF_DEFAULT_OPTS='
   --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
