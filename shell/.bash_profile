@@ -8,6 +8,9 @@ done
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# Map caps lock to esc
+setxkbmap -option caps:escape
+
 export EDITOR=/usr/bin/nvim
 
 # fzf solarized dark
