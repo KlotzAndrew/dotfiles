@@ -26,8 +26,9 @@ extras:
 vim:
 	mkdir -p "$(XDG_CONFIG_HOME)"
 	ln -snf "$(CURDIR)/.vim/vimrc" "$(HOME)/.vimrc"
-	ln -snf "$(CURDIR)/.vim" "$(XDG_CONFIG_HOME)/nvim"
+	ln -snf "$(CURDIR)/.vim" "$(HOME)/.vim"
 	ln -snf "$(CURDIR)/.vim/vimrc" "$(XDG_CONFIG_HOME)/nvim/init.vim"
+	ln -snf "$(CURDIR)/.vim" "$(XDG_CONFIG_HOME)/nvim"
 	sudo mkdir -p /root/.config
 	sudo ln -snf "$(CURDIR)/.vim" /root/.vim
 	sudo ln -snf "$(CURDIR)/.vim/vimrc" /root/.vimrc
