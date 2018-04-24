@@ -9,7 +9,7 @@ done
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Map caps lock to esc
-setxkbmap -option caps:escape
+command -v setxkbmap >/dev/null 2>&1 && setxkbmap -option caps:escape
 
 export EDITOR=/usr/bin/nvim
 
@@ -23,6 +23,10 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# mobile and optional
+export ANDROID_HOME=${HOME}/Library/Android/sdk
+export ANDROID_SDK_ROOT=${ANDROID_HOME}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
