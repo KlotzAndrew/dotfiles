@@ -11,7 +11,7 @@ done
 # Map caps lock to esc
 command -v setxkbmap >/dev/null 2>&1 && setxkbmap -option caps:escape
 
-export EDITOR=/usr/bin/nvim
+export EDITOR=$(which nvim)
 
 # fzf solarized dark
 export FZF_DEFAULT_OPTS='
