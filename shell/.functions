@@ -41,13 +41,22 @@ fo() {
   fi
 }
 
-# fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+f() {
+  local IN=$(rg --line-number --ignore-case --follow --color "always" . | fzf --ansi)
+  # "filename:line_number: data"
+  local arr=(${IN//:/ })
+  local file=${arr[0]}
+  local line=${arr[1]}
+  [[ -n "$file" ]] && ${EDITOR:-vim} "+$line" "$file"
 }
+
+# fd - cd to selected directory
+# fd() {
+#   local dir
+#   dir=$(find ${1:-.} -path '*/\.*' -prune \
+#                   -o -type d -print 2> /dev/null | fzf +m) &&
+#   cd "$dir"
+# }
 
 # fda - including hidden directories
 fda() {
