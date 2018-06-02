@@ -1,5 +1,15 @@
 #! /bin/bash
 
+# Reduce the size of the last screenshot
+prss() {
+  local resizewidth=200
+  local filename=$(ls -t ~/Desktop/Screen\ Shot\ *.png | head -1)
+  local newfile=~/Desktop/$(date +%s)_"$resizewidth".png
+  convert -resize "$resizewidth" "$filename" "$newfile"
+
+  echo "$newfile"
+}
+
 # Create a new directory and enter it
 mkd() {
   mkdir -p "$@"
