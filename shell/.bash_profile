@@ -8,7 +8,7 @@ done
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# Map caps lock to esc
+# Map caps lock to esc (linux only)
 command -v setxkbmap >/dev/null 2>&1 && setxkbmap -option caps:escape
 
 export EDITOR=$(which nvim)
