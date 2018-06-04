@@ -44,6 +44,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Clear highlighting on escape in normal mode
+" The second line is needed for mapping to the escape key since Vim internally
+" uses escape to represent special keys.
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
+
 "File Type settings
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 au BufNewFile,BufRead *.rb,*.rake setlocal et ts=2 sw=2 sts=2
