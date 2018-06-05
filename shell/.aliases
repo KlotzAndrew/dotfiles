@@ -41,6 +41,7 @@ alias gd="g d"
 alias gco="g checkout"
 
 alias h="history"
+alias dl="cd ~/Downloads"
 alias path='echo $PATH | tr -s ":" "\n"'
 
 if type nvim > /dev/null 2>&1; then
