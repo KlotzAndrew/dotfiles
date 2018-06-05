@@ -106,3 +106,10 @@ let g:go_highlight_build_constraints = 1
 
 let g:go_auto_type_info = 1
 let g:go_auto_sameids = 1
+
+"==================== Vim-Easy-Align ============
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
