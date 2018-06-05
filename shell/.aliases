@@ -33,12 +33,15 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
 
+# Git aliases
 alias g="git"
 alias gs="g s" # ghostscript is usually not what I mean
 alias gds="g ds"
 alias gd="g d"
 alias gco="g checkout"
+
 alias h="history"
+alias path='echo $PATH | tr -s ":" "\n"'
 
 if type nvim > /dev/null 2>&1; then
   alias vim="nvim"
