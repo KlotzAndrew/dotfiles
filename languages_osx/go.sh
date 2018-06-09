@@ -2,26 +2,11 @@
 
 set -ex
 
-xcode-select --install
-brew update
-brew install mercurial
+goversion='go1.10.3.darwin-amd64.tar.gz'
 
-echo "installing go"
-# use bash/zsh, https://github.com/moovweb/gvm
-bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+wget -O \
+  /tmp/go1.10.3.tar.gz \
+  https://dl.google.com/go/$goversion
 
-# require go to install v1.5+
-gvm install go1.4 -B
-gvm use go1.4
-export GOROOT_BOOTSTRAP=$GOROOT
-gvm install go1.5
+sudo tar -C /usr/local -xzf /tmp/$goversion
 
-gvm install go1.9
-gvm use go1.9 --default
-
-echo "installed go"
-gvm list
-
-# set these for new shells
-# export GOPATH=$HOME/code/gowork
-# [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
