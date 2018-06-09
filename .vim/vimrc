@@ -32,6 +32,9 @@ let mapleader = ","
 nmap <leader>l :set list!<CR>
 set listchars=space:.,tab:▸\ ,eol:¬
 
+" Share system clipboard
+set clipboard=unnamedplus
+
 " Search
 set incsearch   " Find match as we type
 set hlsearch    " Highlight match
