@@ -21,11 +21,16 @@ else # OS X `ls`
 fi
 
 # some more ls aliases
-alias ls='command ls ${colorflag}'
-alias ll='ls -alF ${colorflag}'
-alias la='ls -A ${colorflag}'
-alias l='ls -CF ${colorflag}'
-alias lsd='ls -lF ${colorflag} | grep --color=never '^d''
+# shellcheck disable=SC2139
+alias ls="command ls ${colorflag}"
+# shellcheck disable=SC2139
+alias ll="ls -alF ${colorflag}"
+# shellcheck disable=SC2139
+alias la="ls -A ${colorflag}"
+# shellcheck disable=SC2139
+alias l="ls -CF ${colorflag}"
+# shellcheck disable=SC2139
+alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 
 alias ..="cd .."
 alias ...="cd ../.."

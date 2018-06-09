@@ -15,8 +15,13 @@ rvm install 2.3.3
 rvm install 2.4.1
 rvm --default use 2.4.1
 
+# shellcheck disable=SC1010
 rvm all do gem install bundler
+# shellcheck disable=SC1010
 rvm all do gem install irbtools
+# shellcheck disable=SC1010
 rvm all do gem install awesome_print
+# shellcheck disable=SC1010
 rvm all do gem install rubocop
+# shellcheck disable=SC1010
 rvm all do gem install reek

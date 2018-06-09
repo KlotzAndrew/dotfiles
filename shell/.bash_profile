@@ -2,16 +2,19 @@
 
 for file in ~/.{bash_prompt,aliases,functions,path}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+    # shellcheck source=/dev/null
 		source "$file"
 	fi
 done
 
+# shellcheck source=/dev/null
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Map caps lock to esc (linux only)
 command -v setxkbmap >/dev/null 2>&1 && setxkbmap -option caps:escape
 
-export EDITOR=$(which nvim)
+editor=$(command -v nvim)
+export EDITOR=$editor
 
 # fzf solarized dark
 export FZF_DEFAULT_OPTS='
@@ -29,9 +32,12 @@ export ANDROID_HOME=${HOME}/Library/Android/sdk
 export ANDROID_SDK_ROOT=${ANDROID_HOME}
 
 export NVM_DIR="$HOME/.nvm"
+# shellcheck source=/dev/null
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
+# shellcheck source=/dev/null
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+# shellcheck source=/dev/null
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

@@ -1,6 +1,8 @@
 #! /bin/bash
 
 # Reduce the size of the last screenshot
+# shellcheck disable=SC2155
+# shellcheck disable=SC2012
 prss() {
   local resizewidth=200
   local filename=$(ls -t ~/Desktop/Screen\ Shot\ *.png | head -1)
@@ -32,6 +34,8 @@ tmpd() {
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
+# shellcheck disable=SC2128
+# shellcheck disable=SC2207
 fe() {
   local IFS=$'\n'
   local files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
@@ -41,6 +45,10 @@ fe() {
 # Modified version of fe() where you can press
 #   - CTRL-O to open with `xdg-open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
+# shellcheck disable=SC2015
+# shellcheck disable=SC2155
+# shellcheck disable=SC2128
+# shellcheck disable=SC2207
 fo() {
   local IFS=$'\n'
   local out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
@@ -51,10 +59,11 @@ fo() {
   fi
 }
 
+# shellcheck disable=SC2155
 f() {
   local IN=$(rg --line-number --ignore-case --follow --color "always" . | fzf --ansi)
   # "filename:line_number: data"
-  local arr=(${IN//:/ })
+  local arr=("${IN//:/ }")
   local file=${arr[0]}
   local line=${arr[1]}
   [[ -n "$file" ]] && ${EDITOR:-vim} "+$line" "$file"
@@ -69,27 +78,31 @@ f() {
 # }
 
 # fda - including hidden directories
+# shellcheck disable=SC2164
 fda() {
   local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
+  dir=$(find "${1:-.}" -type d 2> /dev/null | fzf +m) && cd "$dir"
 }
 
 # fdr - cd to selected parent directory
+# shellcheck disable=SC2164
+# shellcheck disable=SC2155
 fdr() {
-  local declare dirs=()
+  local dirs=()
   get_parent_dirs() {
     if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
     if [[ "${1}" == '/' ]]; then
-      for _dir in "${dirs[@]}"; do echo $_dir; done
+      for _dir in "${dirs[@]}"; do echo "$_dir"; done
     else
-      get_parent_dirs $(dirname "$1")
+      get_parent_dirs "$(dirname "$1")"
     fi
   }
-  local DIR=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
+  local DIR=$(get_parent_dirs "$(realpath "${1:-$PWD}")" | fzf-tmux --tac)
   cd "$DIR"
 }
 
 # cdf - cd into the directory of the selected file
+# shellcheck disable=SC2164
 cdf() {
    local file
    local dir
@@ -102,6 +115,7 @@ runcmd () {
 }
 
 # fh - repeat history
+# shellcheck disable=SC2015
 fh() {
   ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | runcmd
 }
@@ -112,6 +126,7 @@ writecmd () {
 }
 
 # fhe - repeat history edit
+# shellcheck disable=SC2015
 fhe() {
   ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
 }
@@ -123,7 +138,7 @@ fkill() {
 
   if [ "x$pid" != "x" ]
   then
-    echo $pid | xargs kill -${1:-9}
+    echo "$pid" | xargs kill -"${1:-9}"
   fi
 }
 
@@ -135,7 +150,7 @@ fbr() {
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 
 # fco - checkout git branch/tag
@@ -149,16 +164,17 @@ fco() {
     sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   target=$(
     (echo "$tags"; echo "$branches") |
-    fzf-tmux -l40 -- --no-hscroll --ansi +m -d "\t" -n 2 -1 -q "$*") || return
-  git checkout $(echo "$target" | awk '{print $2}')
+    fzf-tmux -l40 -- --no-hscroll --ansi +m -d "\\t" -n 2 -1 -q "$*") || return
+  git checkout "$(echo "$target" | awk '{print $2}')"
 }
 
 # fcoc - checkout git commit
+# shellcheck disable=SC2001
 fcoc() {
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
-  git checkout $(echo "$commit" | sed "s/ .*//")
+  git checkout "$(echo "$commit" | sed "s/ .*//")"
 }
 
 # fshow - git commit browser
@@ -167,7 +183,7 @@ fshow() {
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
       --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                (grep -o '[a-f0-9]\\{7\\}' | head -1 |
                 xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
                 {}
 FZF-EOF"
@@ -175,11 +191,12 @@ FZF-EOF"
 
 # fcs - get git commit sha
 # example usage: git rebase -i `fcs`
+# shellcheck disable=SC2001
 fcs() {
   local commits commit
   commits=$(git log --color=always --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e --ansi --reverse) &&
-  echo -n $(echo "$commit" | sed "s/ .*//")
+  echo -n "$(echo "$commit" | sed "s/ .*//")"
 }
 
 # fstash - easier way to deal with stashes
@@ -201,12 +218,12 @@ fstash() {
     sha="${sha%% *}"
     [[ -z "$sha" ]] && continue
     if [[ "$k" == 'ctrl-d' ]]; then
-      git diff $sha
+      git diff "$sha"
     elif [[ "$k" == 'ctrl-b' ]]; then
-      git stash branch "stash-$sha" $sha
+      git stash branch "stash-$sha" "$sha"
       break;
     else
-      git stash show -p $sha
+      git stash show -p "$sha"
     fi
   done
 }
@@ -218,7 +235,7 @@ ftags() {
   line=$(
     awk 'BEGIN { FS="\t" } !/^!/ {print toupper($4)"\t"$1"\t"$2"\t"$3}' tags |
     cut -c1-$COLUMNS | fzf --nth=2 --tiebreak=begin
-  ) && ${EDITOR:-vim} $(cut -f3 <<< "$line") -c "set nocst" \
+  ) && ${EDITOR:-vim} "$(cut -f3 <<< "$line")" -c "set nocst" \
                                       -c "silent tag $(cut -f2 <<< "$line")"
 }
 
@@ -241,14 +258,14 @@ ftpane() {
 
   target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
 
-  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
-  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+  target_window=$(echo "$target" | awk 'BEGIN{FS=":|-"} {print$1}')
+  target_pane=$(echo "$target" | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
 
   if [[ $current_window -eq $target_window ]]; then
-    tmux select-pane -t ${target_window}.${target_pane}
+    tmux select-pane -t "${target_window}"."${target_pane}"
   else
-    tmux select-pane -t ${target_window}.${target_pane} &&
-    tmux select-window -t $target_window
+    tmux select-pane -t "${target_window}"."${target_pane}" &&
+    tmux select-window -t "$target_window"
   fi
 }
 
@@ -256,7 +273,7 @@ ftpane() {
 v() {
   local files
   files=$(grep '^>' ~/.viminfo | cut -c3- |
-          while read line; do
+          while read -r line; do
             [ -f "${line/\~/$HOME}" ] && echo "$line"
-          done | fzf-tmux -d -m -q "$*" -1) && vim ${files//\~/$HOME}
+          done | fzf-tmux -d -m -q "$*" -1) && vim "${files//\~/$HOME}"
 }
