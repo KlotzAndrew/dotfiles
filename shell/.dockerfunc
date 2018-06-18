@@ -1,0 +1,8 @@
+#! /bin/bash
+
+ngrok() {
+  docker run -it --rm \
+    --network host \
+    ngrokk \
+    ngrok "$@"
+}
