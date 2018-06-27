@@ -1,8 +1,16 @@
 #! /bin/bash
 
 ngrok() {
+  mapping=''
+  if [ "$(uname)" == 'Darwin' ]; then
+    mapping='-p 4040:4040' # use host.docker.internal instead
+  else
+    mapping='--network host'
+  fi
+
+  # shellcheck disable=SC2086
   docker run -it --rm \
-    --network host \
-    ngrokk \
+    $mapping \
+    klotzandrew/ngrok \
     ngrok "$@"
 }
