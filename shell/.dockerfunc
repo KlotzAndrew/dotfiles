@@ -2,15 +2,28 @@
 
 ngrok() {
   mapping=''
+  args=''
   if [ "$(uname)" == 'Darwin' ]; then
     mapping='-p 4040:4040' # use host.docker.internal instead
+
+    for var in "$@"
+    do
+        if [[ $var =~ ^[0-9]+$ ]];
+        then
+          args+="host.docker.internal:$var ";
+        else
+          args+="$var ";
+        fi
+    done
+
   else
     mapping='--network host'
   fi
 
   # shellcheck disable=SC2086
+  # shellcheck disable=SC2068
   docker run -it --rm \
     $mapping \
     klotzandrew/ngrok \
-    ngrok "$@"
+    ngrok ${args[@]}
 }
