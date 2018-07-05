@@ -1,6 +1,6 @@
 #! /bin/bash
 
-for file in ~/.{bash_prompt,aliases,functions,path}; do
+for file in ~/.{bash_prompt,aliases,dockerfunc,functions,path}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
     # shellcheck source=/dev/null
 		source "$file"
