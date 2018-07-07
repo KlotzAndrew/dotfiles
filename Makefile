@@ -3,6 +3,14 @@ XDG_CONFIG_HOME := $(HOME)/.config
 .PHONY: all
 all: gitfiles shellfiles vim update tmux
 
+.PHONY: bin
+bin: ## Installs the bin directory files.
+	# add aliases for things in bin
+	for file in $(shell find $(CURDIR)/bin -type f -not -name ".*.swp"); do \
+		f=$$(basename $$file); \
+		sudo ln -sf $$file /usr/local/bin/$$f; \
+	done
+
 .PHONY: gitfiles
 gitfiles:
 	for file in $(shell find $(CURDIR)/git -type f); do \
