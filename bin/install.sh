@@ -29,6 +29,36 @@ install_golang() {
 	)
 }
 
+base() {
+	apt-add-repository -y ppa:neovim-ppa/stable
+
+	apt-get update
+	apt-get -y upgrade
+
+	apt-get install -y \
+		build-essential \
+		curl \
+		sudo \
+		vim \
+		neovim \
+		software-properties-common \
+		locales \
+		git
+
+	# locale -a
+	echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+	echo "LANG=en_US.UTF-8" > /etc/locale.conf
+	locale-gen en_US.UTF-8
+
+	export LC_CTYPE=en_US.UTF-8
+	export LC_ALL=en_US.UTF-8
+
+
+  # git clone https://github.com/KlotzAndrew/dotfiles.git
+  # make
+}
+
 usage() {
 	echo -e "install.sh\\n\\tThis script installs my basic setup\\n"
 	echo "Usage:"
@@ -46,9 +76,9 @@ main() {
 	fi
 
 	if [[ $cmd == "dotfiles" ]]; then
-    exit 1
-	elif [[ $cmd == "base" ]]; then
 		exit 1
+	elif [[ $cmd == "base" ]]; then
+		 base()
 	elif [[ $cmd == "golang" ]]; then
 		install_golang "$2"
 	else
