@@ -1,5 +1,23 @@
 #! /bin/bash
 
+dclean() {
+  docker rm "$(docker ps -aq 2>/dev/null)"
+  docker rm -v "$(docker ps --filter status=exited -q 2>/dev/null)"
+  docker rmi "$(docker images --filter dangling=true -q 2>/dev/null)"
+}
+
+dstop() {
+  if [ $# -eq 0 ]; then
+    docker stop "$(docker ps -q)"
+  else
+    docker stop "$@"
+  fi
+}
+
+denv() {
+  docker run --rm -it ubuntu bash
+}
+
 ngrok() {
   mapping=''
   args=''
