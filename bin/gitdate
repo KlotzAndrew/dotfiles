@@ -1,4 +1,4 @@
 #! /bin/bash
 
-GIT_AUTHOR_DATE=$(date -u +%Y-%m-%dT%H:%M:%S%z)
-GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
+export GIT_AUTHOR_DATE=$(date -u +%Y-%m-%dT%H:%M:%S%z)
+export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
