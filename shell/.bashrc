@@ -124,10 +124,5 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-if [ -f ~/.bash_profile ]; then
-  # shellcheck source=/dev/null
-  . ~/.bash_profile
-fi
-
 # shellcheck source=/dev/null
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
