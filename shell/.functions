@@ -72,9 +72,8 @@ fo() {
 f() {
   local IN=$(rg --line-number --ignore-case --follow --color "always" . | fzf --ansi)
   # "filename:line_number: data"
-  local arr=("${IN//:/ }")
-  local file=${arr[0]}
-  local line=${arr[1]}
+  local file=$(echo $IN | awk -F ":" '{ print $1 }')
+  local line=$(echo $IN | awk -F ":" '{ print $2 }')
   [[ -n "$file" ]] && ${EDITOR:-vim} "+$line" "$file"
 }
 
