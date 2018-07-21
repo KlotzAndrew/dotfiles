@@ -1,0 +1,1 @@
+/home/potato/code/dotfiles/vim/vimrc
