@@ -15,14 +15,14 @@ bin: ## Installs the bin directory files.
 gitfiles:
 	for file in $(shell find $(CURDIR)/git -type f); do \
 		f=$$(basename $$file); \
-		ln -sf $$file $(HOME)/$$f; \
+		ln -sf $$file $(HOME)/.$$f; \
 	done;
 
 .PHONY: shellfiles
 shellfiles:
 	for file in $(shell find $(CURDIR)/shell -type f); do \
 		f=$$(basename $$file); \
-		ln -sf $$file $(HOME)/$$f; \
+		ln -sf $$file $(HOME)/.$$f; \
 	done;
 
 .PHONY: extras
@@ -33,14 +33,14 @@ extras:
 .PHONY: vim
 vim:
 	mkdir -p "$(XDG_CONFIG_HOME)"
-	ln -snf "$(CURDIR)/.vim/vimrc" "$(HOME)/.vimrc"
-	ln -snf "$(CURDIR)/.vim" "$(HOME)/.vim"
-	ln -snf "$(CURDIR)/.vim" "$(XDG_CONFIG_HOME)/nvim"
-	ln -snf "$(CURDIR)/.vim/vimrc" "$(XDG_CONFIG_HOME)/nvim/init.vim"
+	ln -snf "$(CURDIR)/vim/vimrc" "$(HOME)/.vimrc"
+	ln -snf "$(CURDIR)/vim" "$(HOME)/.vim"
+	ln -snf "$(CURDIR)/vim" "$(XDG_CONFIG_HOME)/nvim"
+	ln -snf "$(CURDIR)/vim/vimrc" "$(XDG_CONFIG_HOME)/nvim/init.vim"
 
 .PHONY: tmux
 tmux:
-	ln -sf $(CURDIR)/.tmux/.tmux.conf $(HOME)/.tmux.conf;
+	ln -sf $(CURDIR)/tmux/tmux.conf $(HOME)/.tmux.conf;
 
 .PHONY: update
 update:
