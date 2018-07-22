@@ -6,6 +6,7 @@ for file in ~/.{bash_prompt,aliases,dockerfunc,functions,path}; do
 		source "$file"
 	fi
 done
+unset file
 
 # append to the history file, don't overwrite it
 shopt -s histappend
