@@ -236,17 +236,6 @@ fstash() {
   done
 }
 
-# ftags - search ctags
-ftags() {
-  local line
-  [ -e tags ] &&
-  line=$(
-    awk 'BEGIN { FS="\t" } !/^!/ {print toupper($4)"\t"$1"\t"$2"\t"$3}' tags |
-    cut -c1-$COLUMNS | fzf --nth=2 --tiebreak=begin
-  ) && ${EDITOR:-vim} "$(cut -f3 <<< "$line")" -c "set nocst" \
-                                      -c "silent tag $(cut -f2 <<< "$line")"
-}
-
 # fs [FUZZY PATTERN] - Select selected tmux session
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
@@ -284,4 +273,60 @@ v() {
           while read -r line; do
             [ -f "${line/\~/$HOME}" ] && echo "$line"
           done | fzf-tmux -d -m -q "$*" -1) && vim "${files//\~/$HOME}"
+}
+
+aws_creds_to_env() {
+  local csv_filename=$1
+  local csv_creds=$(awk 'NR == 2' "$csv_filename" | tr -dc '[:print:]')
+  local access_key_id=$(echo $csv_creds |  awk -F ',' '{print $1}')
+  local secret_access_key=$(echo $csv_creds |  awk -F ',' '{print $2}')
+
+  export AWS_DEFAULT_REGION="us-east-1"
+  export AWS_SECRET_ACCESS_KEY="$secret_access_key"
+  export AWS_ACCESS_KEY_ID="$access_key_id"
+
+  echo "set access key id and access key!"
+}
+
+aws_session_token() {
+  local mfa_device=$1
+  local token_code=$2
+  local creds_json=$(awscli_no_st sts get-session-token --serial-number "$1" --token-code "$2")
+
+  local rv="$?"
+  if [[ $rv -ne 0 || ! $creds_json ]]; then
+      echo "failed to get credentials for user '$1': $creds_json" 1>&2
+      return "$rv"
+  fi
+
+  local jq="jq --exit-status --raw-output"
+  AWS_ACCESS_KEY_ID=$(echo "$creds_json" | $jq .Credentials.AccessKeyId)
+  rv="$?"
+  if [[ $rv -ne 0 || ! $AWS_ACCESS_KEY_ID ]]; then
+      echo "failed to parse output for AWS_ACCESS_KEY_ID: $creds_json" 1>&2
+      return "$rv"
+  fi
+  AWS_SECRET_ACCESS_KEY=$(echo "$creds_json" | $jq .Credentials.SecretAccessKey)
+  rv="$?"
+  if [[ $rv -ne 0 || ! $AWS_SECRET_ACCESS_KEY ]]; then
+      echo "failed to parse output for AWS_SECRET_ACCESS_KEY: $creds_json" 1>&2
+      return "$rv"
+  fi
+  AWS_SESSION_TOKEN=$(echo "$creds_json" | $jq .Credentials.SessionToken)
+  rv="$?"
+  if [[ $rv -ne 0 || ! $AWS_SESSION_TOKEN ]]; then
+      echo "failed to parse output for AWS_SESSION_TOKEN: $creds_json" 1>&2
+      return "$rv"
+  fi
+
+  AWS_SESSION_EXPIRATION=$(echo "$creds_json" | $jq .Credentials.Expiration)
+  rv="$?"
+  if [[ $rv -ne 0 || ! $AWS_SESSION_EXPIRATION ]]; then
+      echo "failed to parse output for AWS_SESSION_EXPIRATION: $creds_json" 1>&2
+      return "$rv"
+  fi
+
+  export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_SESSION_EXPIRATION
+
+  echo "set aws access key id, access key, session token, and expiration!"
 }

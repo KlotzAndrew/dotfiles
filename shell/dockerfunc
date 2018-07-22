@@ -46,6 +46,16 @@ ngrok() {
     ngrok ${args[@]}
 }
 
+awscli_no_st() {
+  docker run --rm -it \
+    -v "$(pwd):/project" \
+    -w "/project" \
+    -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
+    -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
+    -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" \
+    klotzandrew/awscli "$@"
+}
+
 awscli() {
   docker run --rm -it \
     -v "$(pwd):/project" \
@@ -53,6 +63,7 @@ awscli() {
     -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
     -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
     -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" \
+    -e "AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}" \
     klotzandrew/awscli "$@"
 }
 
@@ -63,5 +74,6 @@ packer() {
     -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
     -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
     -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" \
+    -e "AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}" \
     hashicorp/packer:light "$@"
 }
