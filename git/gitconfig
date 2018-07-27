@@ -1,8 +1,34 @@
 [alias]
   alias = !git config -l | grep ^alias | cut -c 7- | sort
   s = status -s
-  d = diff
-  ds = diff --staged
+  last = diff HEAD^
+  r = remote -v
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+  fl = log -u
+
+  # Show the diff between the latest commit and the current state
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+  ds = !"git d --staged"
+
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+  # List contributors with number of commits
+  contributors = shortlog --summary --numbered
+
+  # Color graph log view
+  graph = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+
+  lg = log --color --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an (%G?)>%Creset' --abbrev-commit
+
+  # Something terribly misguided
+  uncommit = reset --soft HEAD^
+
+  # Find commits by source code
+  fc = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+  # Find commits by commit message
+  fm = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
 [apply]
   whitespace = fix
