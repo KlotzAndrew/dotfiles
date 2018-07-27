@@ -275,6 +275,13 @@ v() {
           done | fzf-tmux -d -m -q "$*" -1) && vim "${files//\~/$HOME}"
 }
 
+aws_clear() {
+    unset AWS_ACCESS_KEY_ID
+    unset AWS_SECRET_ACCESS_KEY
+    unset AWS_DEFAULT_REGION
+    unset AWS_SESSION_TOKEN
+}
+
 aws_creds_to_env() {
   local csv_filename=$1
   local csv_creds=$(awk 'NR == 2' "$csv_filename" | tr -dc '[:print:]')
@@ -289,44 +296,40 @@ aws_creds_to_env() {
 }
 
 aws_session_token() {
+  aws_clear
   local mfa_device=$1
   local token_code=$2
-  local creds_json=$(awscli_no_st sts get-session-token --serial-number "$1" --token-code "$2")
 
-  local rv="$?"
-  if [[ $rv -ne 0 || ! $creds_json ]]; then
-      echo "failed to get credentials for user '$1': $creds_json" 1>&2
-      return "$rv"
+  local awsresponse=$(awscli sts get-session-token \
+    --serial-number "$mfa_device" \
+    --query 'Credentials.[AccessKeyId, SecretAccessKey, SessionToken]' \
+    --output text --token-code "$token_code")
+
+  local -a awscreds
+  IFS=$'\t' read -ra awscreds <<< "$awsresponse"
+  if (( ${#awscreds[@]} != 3 )); then
+    echo "Failed to get temporary token from AWS" >&2
+    return 1
   fi
 
-  local jq="jq --exit-status --raw-output"
-  AWS_ACCESS_KEY_ID=$(echo "$creds_json" | $jq .Credentials.AccessKeyId)
-  rv="$?"
-  if [[ $rv -ne 0 || ! $AWS_ACCESS_KEY_ID ]]; then
-      echo "failed to parse output for AWS_ACCESS_KEY_ID: $creds_json" 1>&2
-      return "$rv"
-  fi
-  AWS_SECRET_ACCESS_KEY=$(echo "$creds_json" | $jq .Credentials.SecretAccessKey)
-  rv="$?"
-  if [[ $rv -ne 0 || ! $AWS_SECRET_ACCESS_KEY ]]; then
-      echo "failed to parse output for AWS_SECRET_ACCESS_KEY: $creds_json" 1>&2
-      return "$rv"
-  fi
-  AWS_SESSION_TOKEN=$(echo "$creds_json" | $jq .Credentials.SessionToken)
-  rv="$?"
-  if [[ $rv -ne 0 || ! $AWS_SESSION_TOKEN ]]; then
-      echo "failed to parse output for AWS_SESSION_TOKEN: $creds_json" 1>&2
-      return "$rv"
+  if (( "${#awsresponse[@]}" != 3 )); then
+    echo $rawresponse
+    return 1
   fi
 
-  AWS_SESSION_EXPIRATION=$(echo "$creds_json" | $jq .Credentials.Expiration)
-  rv="$?"
-  if [[ $rv -ne 0 || ! $AWS_SESSION_EXPIRATION ]]; then
-      echo "failed to parse output for AWS_SESSION_EXPIRATION: $creds_json" 1>&2
-      return "$rv"
+  export AWS_DEFAULT_REGION=us-east-1
+
+  local exportargs=(
+    "AWS_ACCESS_KEY_ID=${awsresponse[0]}"
+    "AWS_SECRET_ACCESS_KEY=${awsresponse[1]}"
+    "AWS_SESSION_TOKEN=${awsresponse[2]%$'\r'}"
+  )
+
+  if ! export "${exportargs[@]}"; then
+    echo "Unable to set AWS environment variables" >&2
+    echo "$awsresponse"
+    return 1
   fi
 
-  export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_SESSION_EXPIRATION
-
-  echo "set aws access key id, access key, session token, and expiration!"
+  return 0
 }
