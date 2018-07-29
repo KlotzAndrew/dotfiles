@@ -300,34 +300,30 @@ aws_session_token() {
   local mfa_device=$1
   local token_code=$2
 
-  local awsresponse=$(awscli sts get-session-token \
+  local aws_resp="$(awscli sts get-session-token \
     --serial-number "$mfa_device" \
     --query 'Credentials.[AccessKeyId, SecretAccessKey, SessionToken]' \
-    --output text --token-code "$token_code")
+    --output text --token-code "$token_code")"
 
-  local -a awscreds
-  IFS=$'\t' read -ra awscreds <<< "$awsresponse"
-  if (( ${#awscreds[@]} != 3 )); then
+  local -a aws_creds
+  IFS=$'\t' read -ra aws_creds <<< "$aws_resp"
+  if (( "${#aws_creds[@]}" != 3 )); then
     echo "Failed to get temporary token from AWS" >&2
-    return 1
-  fi
-
-  if (( "${#awsresponse[@]}" != 3 )); then
-    echo $rawresponse
+    echo "$aws_resp"
     return 1
   fi
 
   export AWS_DEFAULT_REGION=us-east-1
 
-  local exportargs=(
-    "AWS_ACCESS_KEY_ID=${awsresponse[0]}"
-    "AWS_SECRET_ACCESS_KEY=${awsresponse[1]}"
-    "AWS_SESSION_TOKEN=${awsresponse[2]%$'\r'}"
+  local export_args=(
+    "AWS_ACCESS_KEY_ID=${aws_creds[0]}"
+    "AWS_SECRET_ACCESS_KEY=${aws_creds[1]}"
+    "AWS_SESSION_TOKEN=${aws_creds[2]%$'\r'}"
   )
 
-  if ! export "${exportargs[@]}"; then
+  if ! export "${export_args[@]}"; then
     echo "Unable to set AWS environment variables" >&2
-    echo "$awsresponse"
+    echo "$aws_resp"
     return 1
   fi
 
