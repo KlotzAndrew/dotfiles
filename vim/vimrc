@@ -94,7 +94,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "==================== FZF ====================
 set rtp+=~/.fzf
 
-command! -bang -nargs=* Find call fzf#vim#grep('rg --line-number --ignore-case --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
+" command! -bang -nargs=* Find call fzf#vim#grep('rg --line-number --ignore-case --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+  \   <bang>0)
 
 "==================== Vim-go ====================
 let g:go_fmt_fail_silently = 0
