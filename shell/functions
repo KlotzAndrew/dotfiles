@@ -300,7 +300,7 @@ aws_session_token() {
   local mfa_device=$1
   local token_code=$2
 
-  local aws_resp="$(awscli sts get-session-token \
+  local aws_resp="$(aws sts get-session-token \
     --serial-number "$mfa_device" \
     --query 'Credentials.[AccessKeyId, SecretAccessKey, SessionToken]' \
     --output text --token-code "$token_code")"
@@ -318,7 +318,7 @@ aws_session_token() {
   local export_args=(
     "AWS_ACCESS_KEY_ID=${aws_creds[0]}"
     "AWS_SECRET_ACCESS_KEY=${aws_creds[1]}"
-    "AWS_SESSION_TOKEN=${aws_creds[2]%$'\r'}"
+    "AWS_SESSION_TOKEN=${aws_creds[2]}"
   )
 
   if ! export "${export_args[@]}"; then

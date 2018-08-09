@@ -47,7 +47,7 @@ ngrok() {
 }
 
 awscli_no_st() {
-  docker run --rm -it \
+  docker run --rm \
     -v "$(pwd):/project" \
     -w "/project" \
     -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
@@ -56,7 +56,7 @@ awscli_no_st() {
     klotzandrew/awscli "$@"
 }
 
-awscli() {
+aws() {
   local awsenv
   if [[ ! -z ${AWS_ACCESS_KEY_ID} ]]; then
     awsenv=" \
@@ -72,7 +72,7 @@ awscli() {
     awsprofile="-e "AWS_PROFILE=${AWS_PROFILE}""
   fi
 
-  docker run --rm -it \
+  docker run --rm \
     --log-driver none \
     -v "${HOME}/.aws:/root/.aws" \
     -v "$(pwd):/project" \
