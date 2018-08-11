@@ -1,9 +1,14 @@
 #! /bin/bash
 
 dclean() {
-  docker rm "$(docker ps -aq 2>/dev/null)"
-  docker rm -v "$(docker ps --filter status=exited -q 2>/dev/null)"
-  docker rmi "$(docker images --filter dangling=true -q 2>/dev/null)"
+  local containers="$(docker ps --filter status=exited -q)"
+  [[ ! -z "$containers" ]] && docker rm $containers
+
+  local volumes="$(docker volume ls -qf dangling=true)"
+  [[ ! -z "$volumes" ]] && docker volume rm $volumes
+
+  local images="$(docker images --filter dangling=true -q)"
+  [[ ! -z "$images" ]] && docker rmi $images
 }
 
 dstop() {
