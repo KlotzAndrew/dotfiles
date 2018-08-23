@@ -1,15 +1,7 @@
 XDG_CONFIG_HOME := $(HOME)/.config
 
 .PHONY: all
-all: gitfiles shellfiles vim update tmux
-
-.PHONY: bin
-bin: ## Installs the bin directory files.
-	# add aliases for things in bin
-	for file in $(shell find $(CURDIR)/bin -type f -not -name ".*.swp"); do \
-		f=$$(basename $$file); \
-		sudo ln -sf $$file /usr/local/bin/$$f; \
-	done
+all: gitfiles shellfiles vim tmux bin
 
 .PHONY: gitfiles
 gitfiles:
@@ -25,11 +17,6 @@ shellfiles:
 		ln -sf $$file $(HOME)/.$$f; \
 	done;
 
-.PHONY: extras
-extras:
-	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	~/.fzf/install
-
 .PHONY: vim
 vim:
 	mkdir -p "$(XDG_CONFIG_HOME)"
@@ -42,7 +29,23 @@ vim:
 tmux:
 	ln -sf $(CURDIR)/tmux/tmux.conf $(HOME)/.tmux.conf;
 
-.PHONY: update
-update:
+.PHONY: bin
+bin: ## Installs the bin directory files.
+	for file in $(shell find $(CURDIR)/bin -type f -not -name ".*.swp"); do \
+		f=$$(basename $$file); \
+		sudo ln -sf $$file /usr/local/bin/$$f; \
+	done
+
+.PHONY: fzf
+fzf:
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install
+
+.PHONY: update_sub
+update_sub:
 	git submodule update --init --recursive
 	git submodule foreach git pull origin master
+
+.PHONY: update_gitdiff
+update_gitdiff:
+	echo "find the compiled version locally"

@@ -7,7 +7,7 @@
   fl = log -u
 
   # Show the diff between the latest commit and the current state
-  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+  d = !"git diff-index --quiet HEAD -- || clear; git diff --patch-with-stat"
   ds = !"git d --staged"
 
   # `git di $number` shows the diff between the state `$number` revisions ago and the current state
@@ -56,6 +56,7 @@
   autocrlf = false
   editor = vim
   excludesfile = ~/.gitignore
+  pager = /usr/local/bin/diff-highlight | less
 
 [diff]
   renames = copies
