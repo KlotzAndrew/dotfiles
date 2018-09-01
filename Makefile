@@ -1,7 +1,7 @@
 XDG_CONFIG_HOME := $(HOME)/.config
 
 .PHONY: all
-all: gitfiles shellfiles vim tmux bin
+all: gitfiles shellfiles vim tmux bin update_sub
 
 .PHONY: gitfiles
 gitfiles:

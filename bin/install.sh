@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 install_golang() {
 	export GO_VERSION
 	GO_VERSION=$(curl -sSL "https://golang.org/VERSION?m=text")
@@ -68,18 +70,18 @@ usage() {
 }
 
 main() {
-	local cmd=$1
+	local cmd="$1"
 
 	if [[ -z "$cmd" ]]; then
 		usage
 		exit 1
 	fi
 
-	if [[ $cmd == "dotfiles" ]]; then
+	if [[ "$cmd" == "dotfiles" ]]; then
 		exit 1
-	elif [[ $cmd == "base" ]]; then
-		 base()
-	elif [[ $cmd == "golang" ]]; then
+	elif [[ "$cmd" == "base" ]]; then
+		base
+	elif [[ "$cmd" == "golang" ]]; then
 		install_golang "$2"
 	else
 		usage
