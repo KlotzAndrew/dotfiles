@@ -17,10 +17,13 @@ set hidden
 set noswapfile
 set nobackup
 
+" toggle tabs/spaces
+" :set noet|retab!
+" :set et|retab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set expandtab
+" set expandtab
 set smarttab
 set autoindent
 

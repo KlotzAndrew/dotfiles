@@ -32,8 +32,6 @@ install_golang() {
 }
 
 base() {
-	apt-add-repository -y ppa:neovim-ppa/stable
-
 	apt-get update
 	apt-get -y upgrade
 
@@ -42,10 +40,12 @@ base() {
 		curl \
 		sudo \
 		vim \
-		neovim \
 		software-properties-common \
 		locales \
 		git
+
+	apt-add-repository -y ppa:neovim-ppa/stable
+	apt-get install -y neovim
 
 	# locale -a
 	echo "LC_ALL=en_US.UTF-8" >> /etc/environment
