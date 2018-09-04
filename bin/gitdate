@@ -1,4 +1,5 @@
 #! /bin/bash
 
-export GIT_AUTHOR_DATE=$(date -u +%Y-%m-%dT%H:%M:%S%z)
+tmpdate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
+export GIT_AUTHOR_DATE="$tmpdate"
 export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE

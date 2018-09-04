@@ -4,7 +4,8 @@ set -ex
 
 # https://github.com/creationix/nvm
 git clone https://github.com/creationix/nvm.git ~/.nvm
-source $HOME/.nvm/nvm.sh
+# shellcheck disable=SC1090
+source "$HOME"/.nvm/nvm.sh
 
 nvm ls-remote
 nvm install v8.11.1

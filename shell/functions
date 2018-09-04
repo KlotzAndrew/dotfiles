@@ -72,8 +72,8 @@ fo() {
 f() {
   local IN=$(rg --line-number --ignore-case --follow --color "always" . | fzf --ansi --nth='4..' --delimiter ':')
   # "filename:line_number: data"
-  local file=$(echo $IN | awk -F ":" '{ print $1 }')
-  local line=$(echo $IN | awk -F ":" '{ print $2 }')
+  local file=$(echo "$IN" | awk -F ":" '{ print $1 }')
+  local line=$(echo "$IN" | awk -F ":" '{ print $2 }')
   [[ -n "$file" ]] && ${EDITOR:-vim} "+$line" "$file"
 }
 
@@ -285,8 +285,8 @@ aws_clear() {
 aws_creds_to_env() {
   local csv_filename=$1
   local csv_creds=$(awk 'NR == 2' "$csv_filename" | tr -dc '[:print:]')
-  local access_key_id=$(echo $csv_creds |  awk -F ',' '{print $1}')
-  local secret_access_key=$(echo $csv_creds |  awk -F ',' '{print $2}')
+  local access_key_id=$(echo "$csv_creds" |  awk -F ',' '{print $1}')
+  local secret_access_key=$(echo "$csv_creds" |  awk -F ',' '{print $2}')
 
   export AWS_DEFAULT_REGION="us-east-1"
   export AWS_SECRET_ACCESS_KEY="$secret_access_key"
@@ -321,6 +321,7 @@ aws_session_token() {
     "AWS_SESSION_TOKEN=${aws_creds[2]}"
   )
 
+  # shellcheck disable=SC2163
   if ! export "${export_args[@]}"; then
     echo "Unable to set AWS environment variables" >&2
     echo "$aws_resp"

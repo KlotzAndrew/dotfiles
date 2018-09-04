@@ -1,14 +1,17 @@
 #! /bin/bash
 
 dclean() {
-  local containers="$(docker ps --filter status=exited -q)"
-  [[ ! -z "$containers" ]] && docker rm $containers
+  local containers
+  containers="$(docker ps --filter status=exited -q)"
+  [[ ! -z "$containers" ]] && docker rm "$containers"
 
-  local volumes="$(docker volume ls -qf dangling=true)"
-  [[ ! -z "$volumes" ]] && docker volume rm $volumes
+  local volumes
+  volumes="$(docker volume ls -qf dangling=true)"
+  [[ ! -z "$volumes" ]] && docker volume rm "$volumes"
 
-  local images="$(docker images --filter dangling=true -q)"
-  [[ ! -z "$images" ]] && docker rmi $images
+  local images
+  images="$(docker images --filter dangling=true -q)"
+  [[ ! -z "$images" ]] && docker rmi "$images"
 }
 
 dstop() {
@@ -77,6 +80,8 @@ aws() {
     awsprofile="-e "AWS_PROFILE=${AWS_PROFILE}""
   fi
 
+	# we do not want to expand to '' when var is empty
+	# shellcheck disable=SC2086
   docker run --rm \
     --log-driver none \
     -v "${HOME}/.aws:/root/.aws" \

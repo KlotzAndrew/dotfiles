@@ -46,5 +46,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 export GOPATH="${HOME}/code/go"
 export PATH=$PATH:/usr/local/go/bin
+# shellcheck disable=SC2155
 export PATH=$PATH:$(go env GOPATH)/bin
 

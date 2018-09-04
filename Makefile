@@ -49,3 +49,10 @@ update_sub:
 .PHONY: update_gitdiff
 update_gitdiff:
 	echo "find the compiled version locally"
+
+.PHONY: test
+test:
+	docker run --rm \
+		-v "${CURDIR}":/usr/src \
+		--workdir /usr/src \
+		klotzandrew/shellcheck ./test.sh
