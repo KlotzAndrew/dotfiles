@@ -45,6 +45,8 @@ base() {
 		git
 
 	apt-add-repository -y ppa:neovim-ppa/stable
+	apt-get update
+
 	apt-get install -y neovim
 
 	# locale -a
