@@ -40,9 +40,14 @@ base() {
 		curl \
 		sudo \
 		vim \
+		tmux \
 		software-properties-common \
 		locales \
 		git
+
+	curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb
+	sudo dpkg -i ripgrep_0.9.0_amd64.deb
+	rm ripgrep_0.9.0_amd64.deb
 
 	apt-add-repository -y ppa:neovim-ppa/stable
 	apt-get update

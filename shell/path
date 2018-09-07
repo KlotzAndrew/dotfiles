@@ -49,3 +49,7 @@ export PATH=$PATH:/usr/local/go/bin
 # shellcheck disable=SC2155
 export PATH=$PATH:$(go env GOPATH)/bin
 
+# cuda for some gpu
+export PATH=/usr/local/cuda-9.0/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
+
