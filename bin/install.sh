@@ -49,6 +49,10 @@ base() {
 	sudo dpkg -i ripgrep_0.9.0_amd64.deb
 	rm ripgrep_0.9.0_amd64.deb
 
+	curl -LO https://github.com/sharkdp/fd/releases/download/v7.1.0/fd-musl_7.1.0_amd64.deb
+	sudo dpkg -i fd-musl_7.1.0_amd64.deb
+	rm fd-musl_7.1.0_amd64.deb
+
 	apt-add-repository -y ppa:neovim-ppa/stable
 	apt-get update
 
