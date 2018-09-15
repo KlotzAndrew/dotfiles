@@ -30,3 +30,9 @@ Thumbs.db
 *.rar
 *.tar
 *.zip
+
+
+# Python #
+# ########
+__pycache__/
+*.pyc

@@ -23,7 +23,8 @@ set nobackup
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-" set expandtab
+set expandtab
+
 set smarttab
 set autoindent
 
@@ -44,6 +45,12 @@ set hlsearch    " Highlight match
 set ignorecase  " Ignore case
 set smartcase   " Override if uppercase
 
+" Trim Whitespace
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" Do not show q: window
+map q: :q
+
 "===== better splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -60,6 +67,7 @@ nnoremap <esc>^[ <esc>^[
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 au BufNewFile,BufRead *.rb,*.rake setlocal et ts=2 sw=2 sts=2
 au BufNewFile,BufRead *.py setlocal et ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.md setlocal spell noet ts=4 sw=4
 au BufNewFile,BufRead *.yml,*.yaml setlocal et ts=2 sw=2
 au BufNewFile,BufRead *.cpp,*.hpp setlocal et ts=2 sw=2
 au BufNewFile,BufRead *.json setlocal et ts=2 sw=2
