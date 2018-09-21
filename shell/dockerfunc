@@ -43,6 +43,7 @@ ngrok() {
     done
 
   else
+    args="$@"
     mapping='--network host'
   fi
 
