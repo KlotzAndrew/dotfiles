@@ -3,8 +3,9 @@ call pathogen#helptags()
 
 filetype plugin indent on "Filetype plugins
 
-set number		"Line numbers
-set autoread		"Reload files changed outside vim
+set number          "Line numbers
+set relativenumber
+set autoread        "Reload files changed outside vim
 set showcmd
 set ruler
 set noerrorbells
