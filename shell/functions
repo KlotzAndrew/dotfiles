@@ -330,3 +330,38 @@ aws_session_token() {
 
   return 0
 }
+
+aws_assume_role() {
+  local acc_id=$1
+  local role_name=$2
+  local session_name=$3
+
+  local aws_resp="$(aws sts assume-role \
+    --role-arn "arn:aws:iam::$acc_id:role/$role_name" \
+    --role-session-name "$session_name"\
+    --query 'Credentials.[AccessKeyId, SecretAccessKey, SessionToken]' \
+    --output text)"
+
+  local -a aws_creds
+  IFS=$'\t' read -ra aws_creds <<< "$aws_resp"
+  if (( "${#aws_creds[@]}" != 3 )); then
+    echo "Failed to get temporary token from AWS" >&2
+    echo "$aws_resp"
+    return 1
+  fi
+
+  local export_args=(
+    "AWS_ACCESS_KEY_ID=${aws_creds[0]}"
+    "AWS_SECRET_ACCESS_KEY=${aws_creds[1]}"
+    "AWS_SESSION_TOKEN=${aws_creds[2]}"
+  )
+
+  # shellcheck disable=SC2163
+  if ! export "${export_args[@]}"; then
+    echo "Unable to set AWS environment variables" >&2
+    echo "$aws_resp"
+    return 1
+  fi
+
+  return 0
+}
