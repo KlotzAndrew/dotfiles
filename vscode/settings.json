@@ -1,0 +1,20 @@
+{
+  "terminal.integrated.rendererType": "dom",
+  "window.zoomLevel": -1,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "editor.rulers": [
+      80,
+      100
+  ],
+  "editor.dragAndDrop": false,
+  "editor.trimAutoWhitespace": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorTheme": "Solarized Dark",
+  "workbench.statusBar.visible": true,
+  "workbench.activityBar.visible": true,
+  "window.menuBarVisibility": "toggle"
+}
