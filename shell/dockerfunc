@@ -104,3 +104,17 @@ terraform() {
   -e "AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}" \
   hashicorp/terraform:light "$@"
 }
+
+gcloud() {
+  docker run --rm -it \
+    -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
+    -v "${HOME}/.kube:/root/.kube" \
+    google/cloud-sdk gcloud "$@"
+}
+
+kubectl() {
+  docker run --rm -it \
+    -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
+    -v "${HOME}/.kube:/root/.kube" \
+    klotzandrew/kubectl "$@"
+}
