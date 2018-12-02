@@ -365,3 +365,10 @@ aws_assume_role() {
 
   return 0
 }
+
+k8_delete_evicted() {
+  for pod in $(kubectl get pods "$@" | grep Evicted | awk '{print $1}');
+  do
+    kubectl delete pod "$@" "$pod"
+  done
+}

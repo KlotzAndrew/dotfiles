@@ -118,3 +118,10 @@ kubectl() {
     -v "${HOME}/.kube:/root/.kube" \
     klotzandrew/kubectl "$@"
 }
+
+helm() {
+  docker run --rm -it \
+    -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
+    -v "${HOME}/.kube:/root/.kube" \
+    klotzandrew/helm "$@"
+}
