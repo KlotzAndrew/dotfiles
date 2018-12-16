@@ -35,6 +35,14 @@ install_rust() {
 	curl https://sh.rustup.rs -sSf | sh
 }
 
+install_kubectl() {
+	kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
+  kubernetes_version=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+	curl -LO https://storage.googleapis.com/kubernetes-release/release/"$kubernetes_version"/bin/"$kernel"/amd64/kubectl > /usr/local/bin/kubectl
+	chmod +x /usr/local/bin/kubectl
+	echo "kuebctl $(kubectl version --client --short)"
+}
+
 base() {
 	apt-get update
 	apt-get -y upgrade
@@ -82,6 +90,7 @@ usage() {
 	echo "  dotfiles                            - get dotfiles"
 	echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
+	echo "  kubectl                             - install kubectl"
 }
 
 main() {
@@ -100,6 +109,8 @@ main() {
 		install_golang "$2"
 	elif [[ "$cmd" == "rust" ]]; then
 		install_rust
+	elif [[ "$cmd" == "kubectl" ]]; then
+		install_kubectl
 	else
 		usage
 	fi

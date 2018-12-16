@@ -114,15 +114,15 @@ gcloud() {
     google/cloud-sdk gcloud "$@"
 }
 
-kubectl() {
-  docker run --rm -it \
-    --network host \
-    -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
-    -v "${HOME}/.kube:/root/.kube" \
-    -v "$(pwd):/usr/src" \
-    -w "/usr/src" \
-    klotzandrew/kubectl "$@"
-}
+# kubectl() {
+#   docker run --rm -i \
+#     --network host \
+#     -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
+#     -v "${HOME}/.kube:/root/.kube" \
+#     -v "$(pwd):/usr/src" \
+#     -w "/usr/src" \
+#     klotzandrew/kubectl "$@"
+# }
 
 # can't run '/sbin/openrc': No such file or directory
 # helm() {

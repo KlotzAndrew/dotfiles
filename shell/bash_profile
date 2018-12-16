@@ -40,3 +40,7 @@ if [ -f ~/.git-completion.bash ]; then
   # shellcheck source=/dev/null
   . ~/.git-completion.bash
 fi
+
+if hash kubectl 2>/dev/null; then
+  source <(kubectl completion bash)
+fi
