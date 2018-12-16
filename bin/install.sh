@@ -31,6 +31,10 @@ install_golang() {
 	)
 }
 
+install_rust() {
+	curl https://sh.rustup.rs -sSf | sh
+}
+
 base() {
 	apt-get update
 	apt-get -y upgrade
@@ -77,6 +81,7 @@ usage() {
 	echo "  base                                - setup sources & install base pkgs"
 	echo "  dotfiles                            - get dotfiles"
 	echo "  golang                              - install golang and packages"
+	echo "  rust                                - install rust"
 }
 
 main() {
@@ -93,6 +98,8 @@ main() {
 		base
 	elif [[ "$cmd" == "golang" ]]; then
 		install_golang "$2"
+	elif [[ "$cmd" == "rust" ]]; then
+		install_rust
 	else
 		usage
 	fi
