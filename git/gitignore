@@ -40,4 +40,6 @@ __pycache__/
 
 # Go #
 # ########
-/vendor
+*/vendor
+
+*/.terraform
