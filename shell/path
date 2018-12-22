@@ -35,6 +35,7 @@ export EDITOR=$editor
 export ANDROID_HOME=${HOME}/Library/Android/sdk
 export ANDROID_SDK_ROOT=${ANDROID_HOME}
 
+# Node
 export NVM_DIR="$HOME/.nvm"
 # shellcheck source=/dev/null
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -44,10 +45,14 @@ export NVM_DIR="$HOME/.nvm"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
+# Golang
 export GOPATH="${HOME}/code/go"
 export PATH=$PATH:/usr/local/go/bin
 # shellcheck disable=SC2155
 export PATH=$PATH:$(go env GOPATH)/bin
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # cuda for some gpu
 export PATH=/usr/local/cuda-9.0/bin:$PATH
