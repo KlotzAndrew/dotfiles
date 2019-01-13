@@ -1,17 +1,7 @@
 #! /bin/bash
 
 dclean() {
-  local containers
-  containers="$(docker ps --filter status=exited -q)"
-  [[ ! -z "$containers" ]] && docker rm "$containers"
-
-  local volumes
-  volumes="$(docker volume ls -qf dangling=true)"
-  [[ ! -z "$volumes" ]] && docker volume rm "$volumes"
-
-  local images
-  images="$(docker images --filter dangling=true -q)"
-  [[ ! -z "$images" ]] && docker rmi "$images"
+  docker system prune
 }
 
 dstop() {
