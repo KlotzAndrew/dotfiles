@@ -96,14 +96,14 @@ packer() {
 #   hashicorp/terraform:light "$@"
 # }
 
-gcloud() {
-  docker run --rm -i \
-    -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
-    -v "${HOME}/.kube:/root/.kube" \
-    -v "$(pwd):/usr/src" \
-    -w "/usr/src" \
-    google/cloud-sdk gcloud "$@"
-}
+# gcloud() {
+#   docker run --rm -i \
+#     -v "${HOME}/.config/gcloud:/root/.config/gcloud" \
+#     -v "${HOME}/.kube:/root/.kube" \
+#     -v "$(pwd):/usr/src" \
+#     -w "/usr/src" \
+#     google/cloud-sdk gcloud "$@"
+# }
 
 # kubectl() {
 #   docker run --rm -i \

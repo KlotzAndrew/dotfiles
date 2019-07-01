@@ -43,6 +43,10 @@ install_kubectl() {
 	echo "kuebctl $(kubectl version --client --short)"
 }
 
+install_gcloud() {
+  curl https://sdk.cloud.google.com | bash
+}
+
 base() {
 	apt-get update
 	apt-get -y upgrade
