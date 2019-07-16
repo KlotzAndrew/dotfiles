@@ -103,6 +103,7 @@ usage() {
 	echo "  dotfiles                            - get dotfiles"
 	echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
+	echo "  ruby                                - install ruby"
 	echo "  kubectl                             - install kubectl"
 }
 
@@ -122,6 +123,8 @@ main() {
 		install_golang "$2"
 	elif [[ "$cmd" == "rust" ]]; then
 		install_rust
+	elif [[ "$cmd" == "rust" ]]; then
+		install_ruby
 	elif [[ "$cmd" == "kubectl" ]]; then
 		install_kubectl
 	else
