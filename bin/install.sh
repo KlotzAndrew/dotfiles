@@ -35,6 +35,15 @@ install_rust() {
 	curl https://sh.rustup.rs -sSf | sh
 }
 
+install_ruby() {
+	curl -sSL https://get.rvm.io | bash -s stable
+	rvm reload
+	rvm install ruby --latest --default
+
+	gem install bundler
+	gem install rails
+}
+
 install_kubectl() {
 	kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
   kubernetes_version=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)

@@ -70,3 +70,8 @@ alias path='echo $PATH | tr -s ":" "\n"'
 if type nvim > /dev/null 2>&1; then
   alias vim="nvim"
 fi
+
+alias rebash='source ${HOME}/.bashrc'
+
+##### tips thanks to http://fauxzen.com/speedtest-from-the-cli/
+alias sspeedtest='echo "scale=2; `curl  --progress-bar -w "%{speed_download}" http://cachefly.cachefly.net/10mb.test -o test.zip ` / 131072" | bc | xargs -I {} echo {}Mb\/s && rm -rf test.zip'
