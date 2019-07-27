@@ -56,6 +56,17 @@ install_gcloud() {
   curl https://sdk.cloud.google.com | bash
 }
 
+install_node() {
+	cd ~/
+	[ ! -d .nvm ] && git clone https://github.com/nvm-sh/nvm.git .nvm
+	cd ~/.nvm
+	git checkout v0.34.0
+	. nvm.sh
+
+	nvm install 'lts/*'
+	nvm alias default 'lts/*'
+}
+
 base() {
 	apt-get update
 	apt-get -y upgrade
@@ -104,6 +115,7 @@ usage() {
 	echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
 	echo "  ruby                                - install ruby"
+	echo "  node                                - install node"
 	echo "  kubectl                             - install kubectl"
 }
 
@@ -123,8 +135,10 @@ main() {
 		install_golang "$2"
 	elif [[ "$cmd" == "rust" ]]; then
 		install_rust
-	elif [[ "$cmd" == "rust" ]]; then
+	elif [[ "$cmd" == "ruby" ]]; then
 		install_ruby
+	elif [[ "$cmd" == "node" ]]; then
+		install_node
 	elif [[ "$cmd" == "kubectl" ]]; then
 		install_kubectl
 	else
