@@ -44,6 +44,16 @@ install_ruby() {
 	gem install rails
 }
 
+install_node() {
+	git clone https://github.com/creationix/nvm.git ~/.nvm
+	# shellcheck disable=SC1090
+	source "$HOME"/.nvm/nvm.sh
+
+	nvm ls-remote --lts
+	nvm install v8.16.1
+	nvm alias default v8.16.1
+}
+
 install_kubectl() {
 	kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
   kubernetes_version=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
