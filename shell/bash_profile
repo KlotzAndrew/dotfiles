@@ -53,3 +53,5 @@ if [ -f '/Users/andrew/google-cloud-sdk/path.bash.inc' ]; then . '/Users/andrew/
 # The next line enables shell command completion for gcloud.
 # shellcheck disable=SC1091
 if [ -f '/Users/andrew/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/andrew/google-cloud-sdk/completion.bash.inc'; fi
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
