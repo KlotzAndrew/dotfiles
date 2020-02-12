@@ -296,7 +296,7 @@ aws_creds_to_env() {
 }
 
 aws_session_token() {
-  aws_clear
+  unset AWS_SESSION_TOKEN
   local mfa_device=$1
   local token_code=$2
 

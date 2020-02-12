@@ -36,6 +36,7 @@ install_rust() {
 }
 
 install_ruby() {
+	# for ubunut: https://stackoverflow.com/a/54440419
 	curl -sSL https://get.rvm.io | bash -s stable
 	rvm reload
 	rvm install ruby --latest --default
