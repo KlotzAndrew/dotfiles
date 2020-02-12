@@ -275,11 +275,15 @@ v() {
           done | fzf-tmux -d -m -q "$*" -1) && vim "${files//\~/$HOME}"
 }
 
+ports() {
+  lsof -i -P -n | grep LISTEN
+}
+
 aws_clear() {
-    unset AWS_ACCESS_KEY_ID
-    unset AWS_SECRET_ACCESS_KEY
-    unset AWS_DEFAULT_REGION
-    unset AWS_SESSION_TOKEN
+  unset AWS_ACCESS_KEY_ID
+  unset AWS_SECRET_ACCESS_KEY
+  unset AWS_DEFAULT_REGION
+  unset AWS_SESSION_TOKEN
 }
 
 aws_creds_to_env() {
