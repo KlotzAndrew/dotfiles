@@ -50,9 +50,10 @@ install_node() {
 	# shellcheck disable=SC1090
 	source "$HOME"/.nvm/nvm.sh
 
-	nvm ls-remote --lts
-	nvm install v8.16.1
-	nvm alias default v8.16.1
+	nvm install --lts # install and set the latest lts versino
+	nvm alis default "$(node --version)"
+
+	command -v nvm
 }
 
 install_kubectl() {
@@ -72,6 +73,7 @@ install_node() {
 	[ ! -d .nvm ] && git clone https://github.com/nvm-sh/nvm.git .nvm
 	cd ~/.nvm
 	git checkout v0.34.0
+	# shellcheck disable=SC1091
 	. nvm.sh
 
 	nvm install 'lts/*'
