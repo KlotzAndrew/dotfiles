@@ -51,7 +51,7 @@ install_node() {
 	source "$HOME"/.nvm/nvm.sh
 
 	nvm install --lts # install and set the latest lts versino
-	nvm alis default "$(node --version)"
+	nvm alias default "$(node --version)"
 
 	command -v nvm
 }
