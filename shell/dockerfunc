@@ -84,6 +84,14 @@ packer() {
     hashicorp/packer:light "$@"
 }
 
+glances() {
+  docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock:ro \
+    --pid host \
+    --network host \
+    docker.io/nicolargo/glances
+}
+
 # terraform() {
 #   docker run --rm -it \
 #   -v "$(pwd):/usr/src" \
