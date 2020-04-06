@@ -80,6 +80,19 @@ install_node() {
 	nvm alias default 'lts/*'
 }
 
+install_yubico() {
+	add-apt-repository ppa:yubico/stable
+	apt-get update
+
+	apt-get install -y \
+		pcscd scdaemon gnupg2 pcsc-tools
+
+	apt-get install -y \
+		yubikey-manager-qt \
+		yubioath-desktop \
+		yubikey-personalization-gui
+}
+
 base() {
 	apt-get update
 	apt-get -y upgrade

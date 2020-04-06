@@ -376,3 +376,64 @@ k8_delete_evicted() {
     kubectl delete pod "$@" "$pod"
   done
 }
+
+entropy() {
+  watch -n 1 cat /proc/sys/kernel/random/entropy_avail
+}
+
+###########
+### GPG ###
+###########
+
+# gpg_export_sgpg_export_secret_subkeyubkey agc.klotz@gmail.com 0xABC123 signing
+gpg_export_secret_subkey() {
+  local email=$1
+  local key_id=$2
+  local key_name=$3
+  gpg --output "$email".secret-subkey-"$key_name"-"$key_id".asc --export-secret-subkeys --armour "$key_id"!
+}
+
+# gpg_export_public_key agc.klotz@gmail.com 0xABC123 signing
+gpg_export_public_key() {
+  local email=$1
+  local key_id=$2
+  local key_name=$3
+  gpg --output "$email".pubilc-key-"$key_name"-"$key_id".asc --export--armour "$key_id"!
+}
+
+# gpg_export_revoke agc.klotz@gmail.com
+gpg_export_revoke() {
+  local email=$1
+  gpg --output "$email".revocation.crt --armour --gen-revoke agc.klotz@gmail.com
+}
+
+gpg_delete_secret_key() {
+  local key_id=$1
+  gpg --delete-secret-keys "$key_id"
+}
+
+gpg_delete_public_key() {
+  local key_id=$1
+  gpg --delete-keys "$key_id"
+}
+
+gpg_import_key() {
+  local filename=$1
+  gpg --import "$filename"
+}
+
+gpg_encrypt() {
+  local filename=$1
+  gpg --encrypt --sign --armour "$filename"
+}
+
+gpg_decrypt() {
+  local input=$1
+  local output=$2
+  gpg -d "$input" --output "$output"
+}
+
+gpg_fingerprint() {
+  local email=$1
+  gpg --fingerprint "$email"
+}

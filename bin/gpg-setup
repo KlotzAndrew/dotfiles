@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# This creates and exports public/private keys for a master key, 3 subkeys, revoke key
+
+set -eou pipefail
+
+SUBKEY_LENGTH=${SUBKEY_LENGTH:=4096}
+SUBKEY_EXPIRE=${SUBKEY_EXPIRE:=0}
+NAME="Andrew Klotz"
+EMAIL="agc.klotz@gmail.com"
+KEY_EXPIRE=0
+
+# https://github.com/jessfraz/dotfiles/blob/9655969e6c03c4363e73f5de40d11b43383f4175/bin/yubikey-ssh-setup
+# https://www.gnupg.org/documentation/manuals/gnupg/Unattended-GPG-key-generation.html
+# https://github.com/baird/GPG/blob/master/GPGen/gpgen
+gpg_generate_masterkey() {
+  gpg2 --quiet --batch --gen-key <<EOF
+%echo Generating a basic OpenPGP key
+%ask-passphrase
+Key-Type: RSA
+Key-Length: 4096
+Key-Usage: sign
+Name-Real: $NAME
+Name-Email: $EMAIL
+Expire-Date: $KEY_EXPIRE
+%commit
+%echo done
+EOF
+
+	KEYID="0x$(gpg2 --keyid-format 0xLONG --list-keys --with-colons | awk -F: '/^pub:/ { print $5 }')"
+	echo "KeyID is ${KEYID}"
+
+	echo "Exporting master secret key..."
+	gpg2 --export-secret-keys --armour --output "${EMAIL}.secret-key.gpg.asc" "$KEYID"!
+
+	echo "Exporting master public key..."
+	gpg2 --export --armor --output "${EMAIL}.public-key.gpg.asc" "$KEYID"!
+
+	echo "Exporting master revocation key..."
+	gpg2 --output "${EMAIL}.revocation-${KEYID}.crt.asc" --armour --gen-revoke "$KEYID"!
+}
+
+gpg_generate_subkeys() {
+	echo "Printing local secret keys..."
+	gpg2 --list-secret-keys
+
+	echo "Generating subkeys..."
+
+	echo "Generating signing subkey..."
+	echo addkey$'\n'4$'\n'$SUBKEY_LENGTH$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
+		gpg2 --expert --batch --display-charset utf-8 \
+		--command-fd 0 --edit-key "$KEYID"
+
+	signing_key_id=$(gpg2 --list-keys | grep '\[S\]' | awk '{ print $2 }' | awk -F'/' '{ print $2 }')
+	gpg2 --export-secret-subkeys --armour --output "$EMAIL".secret-subkey-signing-"$signing_key_id".gpg.asc   "$signing_key_id"!
+	gpg2 --export  --armour --output "$EMAIL".public-subkey-signing-"$signing_key_id".gpg.asc "$signing_key_id"!
+
+	echo "Generating encryption subkey..."
+	echo addkey$'\n'6$'\n'$SUBKEY_LENGTH$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
+		gpg2 --expert --batch --display-charset utf-8 \
+		--command-fd 0 --edit-key "$KEYID"
+
+	encryption_key_id=$(gpg2 --list-keys | grep '\[E\]' | awk '{ print $2 }' | awk -F'/' '{ print $2 }')
+	gpg2 --export-secret-subkeys --armour --output "$EMAIL".secret-subkey-encryption-"$encryption_key_id".gpg.asc   "$encryption_key_id"!
+	gpg2 --export  --armour --output "$EMAIL".public-subkey-encryption-"$encryption_key_id".gpg.asc "$encryption_key_id"!
+
+	echo "Generating authentication subkey..."
+	echo addkey$'\n'8$'\n'S$'\n'E$'\n'A$'\n'q$'\n'$SUBKEY_LENGTH$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
+		gpg2 --expert --batch --display-charset utf-8 \
+		--command-fd 0 --edit-key "$KEYID"
+
+	authentication_key_id=$(gpg2 --list-keys | grep '\[A\]' | awk '{ print $2 }' | awk -F'/' '{ print $2 }')
+	gpg2 --export-secret-subkeys --armour --output "$EMAIL".secret-subkey-authentication-"$authentication_key_id".gpg.asc   "$authentication_key_id"!
+	gpg2 --export  --armour --output "$EMAIL".public-subkey-authentication-"$authentication_key_id".gpg.asc "$authentication_key_id"!
+
+	echo "Printing local secret keys..."
+	gpg2 --list-secret-keys
+}
+
+tmp_gpg_dir() {
+	GNUPGHOME=$(mktemp -d)
+	export GNUPGHOME
+
+	cp ~/.gnupg/gpg.conf "${GNUPGHOME}/gpg.conf"
+	echo "Temporary GNUPGHOME is $GNUPGHOME"
+}
+
+tmp_gpg_dir
+gpg_generate_masterkey
+gpg_generate_subkeys
+
+# gpg --import keyID
+# echo trustgpg$'\n'5$'\n'y$'\n' | gpg --edit-key "$KEYID"

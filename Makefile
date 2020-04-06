@@ -17,6 +17,10 @@ shellfiles:
 		ln -sf $$file $(HOME)/.$$f; \
 	done;
 
+	gpg --list-keys || true;
+	ln -sfn $(CURDIR)/gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
+	ln -sfn $(CURDIR)/gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
+
 .PHONY: vim
 vim:
 	mkdir -p "$(XDG_CONFIG_HOME)"
