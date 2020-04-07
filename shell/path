@@ -31,6 +31,11 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 editor=$(command -v nvim)
 export EDITOR=$editor
 
+# use a tty for gpg
+# error: gpg failed to sign the data
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # mobile and optional
 export ANDROID_HOME=${HOME}/Library/Android/sdk
 export ANDROID_SDK_ROOT=${ANDROID_HOME}
@@ -57,4 +62,3 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # cuda for some gpu
 export PATH=/usr/local/cuda-9.0/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
-
