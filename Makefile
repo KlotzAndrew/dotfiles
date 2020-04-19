@@ -20,6 +20,7 @@ shellfiles:
 	gpg --list-keys || true;
 	ln -sfn $(CURDIR)/gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
 	ln -sfn $(CURDIR)/gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
+	ln -sfn $(CURDIR)/htop $(HOME)/.config/htop;
 
 .PHONY: vim
 vim:
