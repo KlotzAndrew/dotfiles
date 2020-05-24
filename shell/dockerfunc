@@ -61,6 +61,11 @@ aws() {
     awsprofile="-e "AWS_PROFILE=${AWS_PROFILE}""
   fi
 
+  local tty_cmd
+  if [[ ( "$1" == "ssm") && ("$2" == "start-session") ]]; then
+    tty_cmd="-it"
+  fi
+
 	# we do not want to expand to '' when var is empty
 	# shellcheck disable=SC2086
   docker run --rm \
@@ -70,6 +75,7 @@ aws() {
     -w "/project" \
     $awsenv \
     $awsprofile \
+    "$tty_cmd" \
     klotzandrew/awscli "$@"
 }
 
