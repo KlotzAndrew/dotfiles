@@ -69,13 +69,13 @@ aws() {
 	# we do not want to expand to '' when var is empty
 	# shellcheck disable=SC2086
   docker run --rm \
+    $tty_cmd \
     --log-driver none \
     -v "${HOME}/.aws:/root/.aws" \
     -v "$(pwd):/project" \
     -w "/project" \
     $awsenv \
     $awsprofile \
-    "$tty_cmd" \
     klotzandrew/awscli "$@"
 }
 
