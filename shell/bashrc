@@ -20,3 +20,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # added by travis gem
 # shellcheck disable=SC1091
 [ -f /home/potato/.travis/travis.sh ] && source /home/potato/.travis/travis.sh
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
