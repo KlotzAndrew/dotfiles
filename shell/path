@@ -40,6 +40,10 @@ export GPG_TTY
 export ANDROID_HOME=${HOME}/Library/Android/sdk
 export ANDROID_SDK_ROOT=${ANDROID_HOME}
 
+# Clojure
+java_dir=$(which java)
+export JAVA_HOME="$java_dir"
+
 # Node
 export NVM_DIR="$HOME/.nvm"
 # shellcheck source=/dev/null

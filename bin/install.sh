@@ -80,6 +80,19 @@ install_node() {
 	nvm alias default 'lts/*'
 }
 
+install_java() {
+	apt install openjdk-8-jre
+	java -version
+}
+
+install_clojure() {
+	curl -O https://download.clojure.org/install/linux-install-1.10.1.536.sh
+	chmod +x linux-install-1.10.1.536.sh
+	./linux-install-1.10.1.536.sh
+
+	sudo apt-get install -y leiningen
+}
+
 install_yubico() {
 	add-apt-repository ppa:yubico/stable
 	apt-get update
