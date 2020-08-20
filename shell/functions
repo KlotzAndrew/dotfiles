@@ -279,6 +279,10 @@ ports() {
   lsof -i -P -n | grep LISTEN
 }
 
+iops() {
+  iostat -d | tail -n +4 | head -n -1 | awk '{s+=$2} END {print s}'
+}
+
 aws_clear() {
   unset AWS_ACCESS_KEY_ID
   unset AWS_SECRET_ACCESS_KEY

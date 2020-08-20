@@ -41,7 +41,7 @@ export ANDROID_HOME=${HOME}/Library/Android/sdk
 export ANDROID_SDK_ROOT=${ANDROID_HOME}
 
 # Clojure
-java_dir=$(which java)
+java_dir=$(command -v java)
 export JAVA_HOME="$java_dir"
 
 # Node
