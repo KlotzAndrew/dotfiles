@@ -412,13 +412,20 @@ entropy() {
 ### GPG ###
 ###########
 
-gpg_restart_agent(){
+restart_gpgagent(){
+	# Restart the gpg agent.
+	echo "Restarting gpg-agent and scdaemon..."
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
+
+	echo "Killing processes..."
 	# shellcheck disable=SC2046
-	kill -9 $(pidof scdaemon) >/dev/null 2>&1 || true
-	# shellcheck disable=SC2046
-	kill -9 $(pidof gpg-agent) >/dev/null 2>&1 || true
-	gpg-connect-agent /bye >/dev/null 2>&1 || true
-	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1 || true
+	kill -9 $(pgrep scdaemon) $(pgrep gpg-agent) >/dev/null 2>&1
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
+
+	gpgconf --reload gpg-agent
+	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+
+	echo "Restarted gpg-agent and scdaemon..."
 }
 
 # gpg_export_sgpg_export_secret_subkeyubkey agc.klotz@gmail.com 0xABC123 signing
