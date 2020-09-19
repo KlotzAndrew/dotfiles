@@ -61,7 +61,7 @@ alias gs="g s" # ghostscript is usually not what I mean
 alias gds="g ds"
 alias gd="g d"
 alias gco="g checkout"
-alias gc=". /usr/local/bin/gitdate && git commit -v "
+alias gc=". /usr/local/bin/gitdate && git commit -vs " # verbose sign
 
 alias h="history"
 alias dl="cd ~/Downloads"
