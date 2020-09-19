@@ -38,6 +38,33 @@ server() {
 	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nmap[".wasm"] = "application/wasm";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
+serverecho() {
+  port=${1:-3000}
+
+  echo "starting on port $port"
+  while true; do printf "HTTP/1.1 200 OK\\n\\n %s\\n" "$(date)" | nc -l -p "$port" -q 1; done
+}
+
+# =============== Net helpers ======================
+
+# checks if host:port is open
+port() {
+  nmap "$1" "$2"
+}
+
+# checks if host:port is open, verbose no-dns no-io wait1 udp
+portudp() {
+  nc -vnzw1 -u "$1" "$2"
+}
+
+
+# lists open ports on host
+ports() {
+  # lsof -i -P -n | grep LISTEN
+  host=${1:-localhost}
+  nmap -v "$host"
+}
+
 # =============== FZF helpers ======================
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
@@ -273,10 +300,6 @@ v() {
           while read -r line; do
             [ -f "${line/\~/$HOME}" ] && echo "$line"
           done | fzf-tmux -d -m -q "$*" -1) && vim "${files//\~/$HOME}"
-}
-
-ports() {
-  lsof -i -P -n | grep LISTEN
 }
 
 iops() {
