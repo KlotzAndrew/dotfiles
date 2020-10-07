@@ -142,6 +142,12 @@ ports() {
   nmap -v "$host"
 }
 
+# pipe jq with not-all-json lines
+# https://github.com/stedolan/jq/wiki/FAQ#processing-not-quite-valid-json
+jjq() {
+  jq -R '. as $line | try fromjson catch $line'
+}
+
 # =============== FZF helpers ======================
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
