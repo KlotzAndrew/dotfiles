@@ -148,6 +148,20 @@ jjq() {
   jq -R '. as $line | try fromjson catch $line'
 }
 
+# =============== Disk helpers ======================
+
+large_files() {
+  dir=${1:-/}
+  size=${2:-"+100M"}
+  find "${dir}" -xdev -type f -size "${size}" -exec ls -lh {} \; | sort -k5 -hr
+}
+
+large_dirs() {
+  dir=${1:-/}
+  limit=${2:-25}
+  du -ahx "${dir}" | sort -rh | head -"${limit}"
+}
+
 # =============== FZF helpers ======================
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
