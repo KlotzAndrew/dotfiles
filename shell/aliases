@@ -63,6 +63,11 @@ alias gd="g d"
 alias gco="g checkout"
 alias gc=". /usr/local/bin/gitdate && git commit -vs " # verbose sign
 
+alias tar-gz="tar -xvzf"
+alias tar-xz="tar -xvf" # or .tar
+alias tar-bz2="tar -xjvf"
+alias tar-xkcd="xdg-open https://xkcd.com/1168"
+
 alias h="history"
 alias dl="cd ~/Downloads"
 alias path='echo $PATH | tr -s ":" "\n"'
