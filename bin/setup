@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -ex
+
+dotpath="$HOME/code"
+dotfiles="git@github.com:KlotzAndrew/dotfiles.git"
+
+mkdir -p "$dotpath"
+
+sudo apt install git
+
+git clone "$dotfiles" "$dotpath"
+
+cd "$dotpath/dotfiles"
+
+./bin/install.sh base
+
+make

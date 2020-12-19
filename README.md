@@ -17,3 +17,7 @@ source ~/.bash_profile
 # need path set for languages
 ./bin/install.sh golang
 ```
+
+```bash
+curl -LS raw.github.com/KlotzAndrew/dotfiles/master/bin/setup | bash
+```

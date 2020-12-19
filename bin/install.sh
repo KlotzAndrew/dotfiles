@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 install_golang() {
 	export GO_VERSION
@@ -94,23 +94,23 @@ install_clojure() {
 }
 
 install_yubico() {
-	add-apt-repository ppa:yubico/stable
-	apt-get update
+	sudo add-apt-repository ppa:yubico/stable
+	sudo apt-get update
 
-	apt-get install -y \
+	sudo apt-get install \
 		pcscd scdaemon gnupg2 pcsc-tools
 
-	apt-get install -y \
-		yubikey-manager-qt \
+	sudo apt-get install \
+		yubikey-manager \
 		yubioath-desktop \
 		yubikey-personalization-gui
 }
 
 base() {
-	apt-get update
-	apt-get -y upgrade
+	sudo apt-get update
+	sudo apt-get upgrade
 
-	apt-get install -y \
+	sudo apt-get install \
 		build-essential \
 		curl \
 		sudo \
@@ -128,22 +128,18 @@ base() {
 	sudo dpkg -i fd-musl_7.1.0_amd64.deb
 	rm fd-musl_7.1.0_amd64.deb
 
-	apt-add-repository -y ppa:neovim-ppa/stable
-	apt-get update
-	apt-get install -y neovim
+	sudo apt-add-repository ppa:neovim-ppa/stable
+	sudo apt-get update
+	sudo apt-get install neovim
 
 	# locale -a
-	echo "LC_ALL=en_US.UTF-8" >> /etc/environment
-	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-	echo "LANG=en_US.UTF-8" > /etc/locale.conf
-	locale-gen en_US.UTF-8
+	echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment
+	echo "en_US.UTF-8 UTF-8" | sudo tee -a /etc/locale.gen
+	echo "LANG=en_US.UTF-8" | sudo tee -a /etc/locale.conf
+	sudo locale-gen en_US.UTF-8
 
 	export LC_CTYPE=en_US.UTF-8
 	export LC_ALL=en_US.UTF-8
-
-
-  # git clone https://github.com/KlotzAndrew/dotfiles.git
-  # make
 }
 
 usage() {
@@ -180,6 +176,8 @@ main() {
 		install_node
 	elif [[ "$cmd" == "kubectl" ]]; then
 		install_kubectl
+	elif [[ "$cmd" == "yubico" ]]; then
+		install_yubico
 	else
 		usage
 	fi
