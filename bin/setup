@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 dotpath="$HOME/code"
-dotfiles="git@github.com:KlotzAndrew/dotfiles.git"
+dotfiles="https://github.com/KlotzAndrew/dotfiles.git"
 
 mkdir -p "$dotpath"
 
