@@ -37,8 +37,13 @@ GPG_TTY=$(tty)
 export GPG_TTY
 
 # mobile and optional
-export ANDROID_HOME=${HOME}/Library/Android/sdk
-export ANDROID_SDK_ROOT=${ANDROID_HOME}
+if [ "$(uname)" == 'Darwin' ]; then
+  export ANDROID_HOME=${HOME}/Library/Android/sdk
+  export ANDROID_SDK_ROOT=${ANDROID_HOME}
+else
+  export ANDROID_HOME=${HOME}/Android
+  export ANDROID_SDK_ROOT=${ANDROID_HOME}/sdk
+fi
 
 # Clojure
 java_dir=$(command -v java)
@@ -66,3 +71,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # cuda for some gpu
 export PATH=/usr/local/cuda-9.0/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
+
+# Added by serverless binary installer
+export PATH="$HOME/.serverless/bin:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/klotz/.sdkman"
+[[ -s "/home/klotz/.sdkman/bin/sdkman-init.sh" ]] && source "/home/klotz/.sdkman/bin/sdkman-init.sh"
