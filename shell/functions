@@ -579,3 +579,7 @@ gpg_fingerprint() {
   local email=$1
   gpg --fingerprint "$email"
 }
+
+### TODO: SSH helpers
+
+# https://robotmoon.com/ssh-tunnels/
