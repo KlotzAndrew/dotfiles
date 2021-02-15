@@ -194,8 +194,7 @@ fo() {
   fi
 }
 
-# shellcheck disable=SC2155
-f() {
+ff() {
   local IN=$(rg --line-number --ignore-case --follow --color "always" . | fzf --ansi --nth='4..' --delimiter ':')
   # "filename:line_number: data"
   local file=$(echo "$IN" | awk -F ":" '{ print $1 }')
