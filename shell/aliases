@@ -17,6 +17,7 @@ done
 # Linux specific aliases, work on both MacOS and Linux.
 pbcopy() {
 	stdin=$(</dev/stdin);
+	# shellcheck disable=SC2230
 	pbcopy="$(which pbcopy)";
 	if [[ -n "$pbcopy" ]]; then
 		echo "$stdin" | "$pbcopy"
@@ -26,6 +27,7 @@ pbcopy() {
 }
 
 pbpaste() {
+	# shellcheck disable=SC2230
 	pbpaste="$(which pbpaste)";
 	if [[ -n "$pbpaste" ]]; then
 		"$pbpaste"
