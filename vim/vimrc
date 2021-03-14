@@ -10,7 +10,7 @@ set showcmd
 set ruler
 set noerrorbells
 
-set colorcolumn=72
+set colorcolumn=80
 set splitright
 set splitbelow
 set hidden
