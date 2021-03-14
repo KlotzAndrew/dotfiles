@@ -25,33 +25,33 @@
   uncommit = reset --soft HEAD^
 
   # Find commits by source code
-  fc = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+  fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
 
   # Find commits by commit message
-  fm = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+  fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
 [apply]
   whitespace = fix
 
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold # line info
-	old = red # deletions
-	new = green # additions
+  meta = yellow bold
+  frag = magenta bold # line info
+  old = red # deletions
+  new = green # additions
 
 [color "status"]
-	added = yellow
-	changed = green
+  added = yellow
+  changed = green
   untracked = cyan
 
 [commit]
   template = ~/.gitmessage
-	gpgsign = true
+  gpgsign = true
 
 [core]
   autocrlf = false
@@ -66,9 +66,9 @@
   autocorrect = 20
 
 [user]
-	email = agc.klotz@gmail.com
-	name = Andrew Klotz
-	signingkey = 0xDC7A395217DCF311
+  email = agc.klotz@gmail.com
+  name = Andrew Klotz
+  signingkey = 0xDC7A395217DCF311
 
 [gpg]
-	program = gpg2
+  program = gpg2

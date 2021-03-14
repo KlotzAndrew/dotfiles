@@ -1,10 +1,10 @@
 #! /bin/bash
 
 for file in ~/.{bash_prompt,aliases,dockerfunc,functions,path}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
+  if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+    # shellcheck source=/dev/null
+    source "$file"
+  fi
 done
 unset file
 

@@ -66,8 +66,8 @@ aws() {
     tty_cmd="-it"
   fi
 
-	# we do not want to expand to '' when var is empty
-	# shellcheck disable=SC2086
+  # we do not want to expand to '' when var is empty
+  # shellcheck disable=SC2086
   docker run --rm \
     $tty_cmd \
     --log-driver none \
