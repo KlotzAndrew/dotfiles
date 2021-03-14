@@ -62,9 +62,13 @@
 [diff]
   renames = copies
 
+[help]
+  autocorrect = 20
+
 [user]
 	email = agc.klotz@gmail.com
 	name = Andrew Klotz
 	signingkey = 0xDC7A395217DCF311
+
 [gpg]
 	program = gpg2
