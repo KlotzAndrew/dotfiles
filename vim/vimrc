@@ -35,7 +35,9 @@ set linebreak
 let mapleader = ","
 
 nmap <leader>l :set list!<CR>
+set list
 set listchars=space:.,tab:▸\ ,eol:¬
+" set list listchars=tab:»·,trail:·,nbsp:·
 
 " Share system clipboard
 set clipboard=unnamedplus
