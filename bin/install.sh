@@ -85,6 +85,22 @@ install_java() {
   java -version
 }
 
+install_vagrant() {
+  apt install virtualbox
+
+  curl -SL --progress-bar https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_linux_amd64.zip --output /tmp/vagrant.zip
+  unzip -o /tmp/vagrant.zip -d /usr/local/bin
+
+  rm  /tmp/vagrant.zip
+
+  # libarchive-tools not default in ubuntu 20.04
+  apt-get install libarchive-tools
+
+  vagrant --version
+
+  vagrant plugin install vagrant-vbguest
+}
+
 install_clojure() {
   curl -O https://download.clojure.org/install/linux-install-1.10.1.536.sh
   chmod +x linux-install-1.10.1.536.sh
