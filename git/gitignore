@@ -5,7 +5,6 @@
 .vscode/
 
 # OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*
@@ -15,14 +14,10 @@ ehthumbs.db
 Thumbs.db
 
 # Logs and databases #
-######################
 *.log
 *.sqlite
 
 # Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
 *.7z
 *.dmg
 *.gz
@@ -32,23 +27,36 @@ Thumbs.db
 *.tar
 *.zip
 
-
 # Python #
-# ########
 __pycache__/
 *.pyc
 
 # Go #
-# ########
 */vendor
 
 # Terraform #
-# ###########
 */.terraform
 *.tfstate
 *.tfstate.*
-
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# Vagrant
+.vagrant
