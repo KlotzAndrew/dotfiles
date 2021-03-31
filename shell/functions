@@ -202,6 +202,12 @@ ff() {
   [[ -n "$file" ]] && ${EDITOR:-vim} "+$line" "$file"
 }
 
+fif() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --files-with-matches --no-messages "$1" |
+    fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
 # fd - cd to selected directory
 # fd() {
 #   local dir
@@ -328,7 +334,7 @@ find-commit-checkout() {
 # FZF-EOF"
 # }
 
-_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\\{7\\}' | head -1"
 _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always %'"
 
 find-commit() {

@@ -1,8 +1,5 @@
 #! /bin/bash
 
-# shellcheck source=/dev/null
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 # Map caps lock to esc (linux only)
 command -v setxkbmap >/dev/null 2>&1 && setxkbmap -option caps:escape
 
@@ -27,7 +24,17 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-export FZF_DEFAULT_OPTS='--reverse --border --exact --height=50%'
+# export FZF_DEFAULT_OPTS='--reverse --border --exact --height=50%'
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
 
 editor=$(command -v nvim)
 export EDITOR=$editor
@@ -78,4 +85,5 @@ export PATH="$HOME/.serverless/bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/klotz/.sdkman"
+# shellcheck disable=SC1091
 [[ -s "/home/klotz/.sdkman/bin/sdkman-init.sh" ]] && source "/home/klotz/.sdkman/bin/sdkman-init.sh"

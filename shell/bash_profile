@@ -41,6 +41,10 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+# after bash completion https://github.com/junegunn/fzf/issues/872
+# shellcheck source=/dev/null
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 if hash kubectl 2>/dev/null; then
   # shellcheck source=/dev/null
   source <(kubectl completion bash)
