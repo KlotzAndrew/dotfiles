@@ -12,11 +12,7 @@ install_golang() {
     GO_VERSION=$1
   fi
 
-  # purge old src
-  # if [[ -d "$GO_SRC" ]]; then
-  #   sudo rm -rf "$GO_SRC"
-  #   sudo rm -rf "$GOPATH"
-  # fi
+  sudo rm -rf /usr/local/go
 
   GO_VERSION=${GO_VERSION#go}
 
