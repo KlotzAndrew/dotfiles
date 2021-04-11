@@ -12,6 +12,13 @@ prss() {
   echo "$newfile"
 }
 
+alert-me() {
+  "$@"
+  res=$?
+  notify-send --urgency=critical "exit $res" "$*"
+  return $res
+}
+
 # Create a new directory and enter it
 mkd() {
   mkdir -p "$@"
