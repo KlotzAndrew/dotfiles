@@ -19,6 +19,7 @@ sudo make prefix=/usr/local install
 cd ..
 rm git.tar.gz
 rm -rf git-*
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 
 git clone "$dotfiles" "$dotpath"
 
