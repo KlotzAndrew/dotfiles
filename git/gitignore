@@ -53,6 +53,7 @@ override.tf.json
 *_override.tf.json
 
 # Object files
+*.so
 *.o
 *.ko
 *.obj
@@ -60,6 +61,7 @@ override.tf.json
 
 # Kernel Module Compile Results
 *.mod*
+!go.mod
 *.cmd
 .tmp_versions/
 modules.order
