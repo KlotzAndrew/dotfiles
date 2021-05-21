@@ -624,6 +624,23 @@ gpg_fingerprint() {
 
 ### TODO: SSH helpers
 
+verify_ssh_key() {
+  local privkey=$1
+  local pubkey=$2
+
+  # if the $1 and $2 params are backwards
+  if [ -z "$(sed -n '/^-----BEGIN RSA PRIVATE KEY/p;q' "$privkey")" ]; then
+    privkey=$2
+    pubkey=$1
+  fi
+
+  if diff <(ssh-keygen -y -f "$privkey" | cut -d' ' -f 2) <(cut -d' ' -f 2 "$pubkey"); then
+    echo "valid keypair"
+  else
+    echo "invalid keypair"
+  fi
+}
+
 # https://robotmoon.com/ssh-tunnels/
 
 ### Chrome
