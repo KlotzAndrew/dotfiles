@@ -107,6 +107,7 @@ alias tar-xkcd="xdg-open https://xkcd.com/1168"
 alias h="history"
 alias dl="cd ~/Downloads"
 alias path='echo $PATH | tr -s ":" "\n"'
+alias dotfiles="cd ~/code/dotfiles && vim"
 
 if type nvim > /dev/null 2>&1; then
   alias vim="nvim"
