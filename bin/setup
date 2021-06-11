@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 dotpath="$HOME/code"
 dotfiles="https://github.com/KlotzAndrew/dotfiles.git"
@@ -21,7 +21,7 @@ rm git.tar.gz
 rm -rf git-*
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 
-git clone "$dotfiles" "$dotpath"
+git clone "$dotfiles" "$dotpath/dotfiles"
 
 cd "$dotpath/dotfiles"
 
