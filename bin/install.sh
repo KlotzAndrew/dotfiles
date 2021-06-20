@@ -52,6 +52,10 @@ install_node() {
   command -v nvm
 }
 
+install_haskell() {
+  apt-get install haskell-platform -y
+}
+
 install_kubectl() {
   kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
   kubernetes_version=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
@@ -105,6 +109,13 @@ install_clojure() {
   sudo apt-get install -y leiningen
 }
 
+install_terraform() {
+  curl https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_amd64.zip --output /tmp/terraform.zip
+  unzip /tmp/terraform.zip
+  mv /tmp/terraform /usr/local/bin/terraform
+  rm /tmp/terraform.zip
+}
+
 install_yubico() {
   sudo add-apt-repository ppa:yubico/stable
   sudo apt-get update
@@ -153,7 +164,7 @@ base() {
   sudo apt-get update
   sudo apt-get upgrade
 
-  sudo apt-get install \
+  sudo apt-get install -y \
     build-essential \
     curl \
     sudo \
@@ -173,7 +184,7 @@ base() {
 
   sudo apt-add-repository ppa:neovim-ppa/stable
   sudo apt-get update
-  sudo apt-get install neovim
+  sudo apt-get install -y neovim
 
   # locale -a
   echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment
