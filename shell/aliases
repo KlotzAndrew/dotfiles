@@ -32,7 +32,7 @@ pbpaste() {
   if [[ -n "$pbpaste" ]]; then
     "$pbpaste"
   else
-    xclip -selection clipboard
+    xclip -selection clipboard -o
   fi
 }
 
