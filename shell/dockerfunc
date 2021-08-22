@@ -6,7 +6,7 @@ dclean() {
 
 dstop() {
   if [ $# -eq 0 ]; then
-    docker stop "$(docker ps -q)"
+    docker ps -a --format '{{.Names}}' | xargs  -n1 -I {} -P 8 sh -c 'docker stop {}'
   else
     docker stop "$@"
   fi
