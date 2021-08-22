@@ -51,6 +51,16 @@ update_sub:
 	git submodule update --init --recursive
 	git submodule foreach git pull origin master
 
+.PHONY: add_submodule
+add_submodule:
+	#	git submodule add <remote_url> <destination_folder>
+	# git submodule add https://github.com/jiangmiao/auto-pairs vim/bundle/auto-pairs
+
+.PHONY: rm_submodule
+rm_submodule:
+	# git submodule deinit <submodule>
+	# git rm <submodule>
+
 .PHONY: update_gitdiff
 update_gitdiff:
 	echo "find the compiled version locally"
