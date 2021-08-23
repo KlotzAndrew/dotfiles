@@ -58,6 +58,7 @@ add_submodule:
 
 .PHONY: rm_submodule
 rm_submodule:
+	# https://stackoverflow.com/questions/1260748/how-do-i-remove-a-submodule/7646931#7646931
 	# git submodule deinit <submodule>
 	# git rm <submodule>
 

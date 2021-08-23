@@ -83,6 +83,17 @@ export LD_LIBRARY_PATH="/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH"
 # Added by serverless binary installer
 export PATH="$HOME/.serverless/bin:$PATH"
 
+export CDPATH="${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src"
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
+
+# shellcheck source=/dev/null
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# shellcheck source=/dev/null
+[ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
+
 # fly.io
 export FLYCTL_INSTALL="/home/klotz/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
@@ -91,3 +102,6 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 export SDKMAN_DIR="/home/klotz/.sdkman"
 # shellcheck disable=SC1091
 [[ -s "/home/klotz/.sdkman/bin/sdkman-init.sh" ]] && source "/home/klotz/.sdkman/bin/sdkman-init.sh"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
