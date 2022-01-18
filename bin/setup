@@ -2,29 +2,33 @@
 
 set -ex
 
-dotpath="$HOME/code"
-dotfiles="https://github.com/KlotzAndrew/dotfiles.git"
+setup_dotfiles() {
+    dotpath="$HOME/code"
+    dotfiles="https://github.com/KlotzAndrew/dotfiles.git"
 
-mkdir -p "$dotpath"
+    mkdir -p "$dotpath"
 
-# sudo apt install git
-sudo apt update
-sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc
+    # sudo apt install git
+    sudo apt update
+    sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc
 
-curl -o git.tar.gz https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.31.1.tar.gz
-tar -zxf git.tar.gz
-cd git-*
-make prefix=/usr/local all
-sudo make prefix=/usr/local install
-cd ..
-rm git.tar.gz
-rm -rf git-*
-curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+    curl -o git.tar.gz https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.31.1.tar.gz
+    tar -zxf git.tar.gz
+    cd git-*
+    make prefix=/usr/local all
+    sudo make prefix=/usr/local install
+    cd ..
+    rm git.tar.gz
+    rm -rf git-*
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 
-git clone "$dotfiles" "$dotpath/dotfiles"
+    git clone "$dotfiles" "$dotpath/dotfiles"
 
-cd "$dotpath/dotfiles"
+    cd "$dotpath/dotfiles"
 
-./bin/install.sh base
+    ./bin/install.sh base
 
-make
+    make
+}
+
+setup_dotfiles
