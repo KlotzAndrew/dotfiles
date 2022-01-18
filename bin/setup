@@ -4,7 +4,7 @@ set -ex
 
 setup_dotfiles() {
     dotpath="$HOME/code"
-    dotfiles="https://github.com/KlotzAndrew/dotfiles.git"
+    dotfiles="git@github.com:KlotzAndrew/dotfiles.git"
 
     mkdir -p "$dotpath"
 
