@@ -174,17 +174,22 @@ base() {
     locales \
     git
 
+  # brew install ripgrep
   curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb
   sudo dpkg -i ripgrep_0.9.0_amd64.deb
   rm ripgrep_0.9.0_amd64.deb
 
+  # brew install fd
   curl -LO https://github.com/sharkdp/fd/releases/download/v7.1.0/fd-musl_7.1.0_amd64.deb
   sudo dpkg -i fd-musl_7.1.0_amd64.deb
   rm fd-musl_7.1.0_amd64.deb
 
+  # brew install neovim
   sudo apt-add-repository ppa:neovim-ppa/stable
   sudo apt-get update
   sudo apt-get install -y neovim
+
+  # brew install gpg2 gnupg pinentry-mac
 
   # locale -a
   echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment
