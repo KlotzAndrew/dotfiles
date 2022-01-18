@@ -190,6 +190,7 @@ base() {
   sudo apt-get install -y neovim
 
   # brew install gpg2 gnupg pinentry-mac
+  # brew install bash
 
   # locale -a
   echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment

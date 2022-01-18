@@ -1,5 +1,7 @@
 #! /bin/bash
 
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 for file in ~/.{bash_prompt,aliases,dockerfunc,functions,path}; do
   if [[ -r "$file" ]] && [[ -f "$file" ]]; then
     # shellcheck source=/dev/null
