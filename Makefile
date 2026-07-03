@@ -41,6 +41,11 @@ bin: ## Installs the bin directory files.
 		sudo ln -sf $$file /usr/local/bin/$$f; \
 	done
 
+.PHONY: workfiles
+workfiles:
+	ln -sf $(CURDIR)/work/shellrc $(HOME)/.workrc
+	ln -sf $(CURDIR)/git/gitconfig.work $(HOME)/.gitconfig.work
+
 .PHONY: fzf
 fzf:
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf

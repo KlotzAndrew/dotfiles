@@ -36,8 +36,13 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-editor=$(command -v nvim)
-export EDITOR=$editor
+# check if nvim exists and echo a message if not
+if ! command -v nvim &> /dev/null; then
+  echo "nvim not found, please install it"
+else
+  editor=$(command -v nvim)
+  export EDITOR=$editor
+fi
 
 # use a tty for gpg
 # error: gpg failed to sign the data
@@ -103,5 +108,17 @@ export SDKMAN_DIR="/home/klotz/.sdkman"
 # shellcheck disable=SC1091
 [[ -s "/home/klotz/.sdkman/bin/sdkman-init.sh" ]] && source "/home/klotz/.sdkman/bin/sdkman-init.sh"
 
+# export PATH=$PATH:~/Library/Application\ Support/pypoetry/venv/bin
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$HOME/.rvm/bin:$PATH"
+
+
+. "$HOME/.cargo/env"
+
+export M2_HOME=/usr/local/apache-maven-3.9.9
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
+
+export DOTNET_ROOT=/usr/local/share/dotnet
+export PATH=$PATH:$DOTNET_ROOT:$HOME/.dotnet/tools

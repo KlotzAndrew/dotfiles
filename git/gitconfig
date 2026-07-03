@@ -1,5 +1,5 @@
 [include]
-    path = ~/.gitconfig.monorepo
+    path = ~/.gitconfig.work
 
 [alias]
   alias = !git config -l | grep ^alias | cut -c 7- | sort
@@ -84,14 +84,3 @@
 [pull]
   rebase = true
 
-[credential]
-  helper = /usr/local/share/gcm-core/git-credential-manager
-
-[credential "https://dev.azure.com"]
-  useHttpPath = true
-
-[filter "lfs"]
-  process = git-lfs filter-process
-  required = true
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
