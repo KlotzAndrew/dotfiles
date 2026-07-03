@@ -37,7 +37,6 @@ __pycache__/
 
 # jvm
 .gradle/
-build/
 buildSrcTmp/
 distTmp/
 outTmp/
@@ -70,3 +69,7 @@ dkms.conf
 
 # Vagrant
 .vagrant
+
+.cmake
+.venv*
+_deps

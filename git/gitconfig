@@ -1,3 +1,6 @@
+[include]
+    path = ~/.gitconfig.monorepo
+
 [alias]
   alias = !git config -l | grep ^alias | cut -c 7- | sort
   s = status -s
@@ -23,6 +26,7 @@
 
   # Something terribly misguided
   uncommit = reset --soft HEAD^
+  fix = "!f() { if [[ $(git symbolic-ref --short HEAD) == feature/* ]]; then git commit --amend --no-edit && git push origin --force-with-lease $(git symbolic-ref --short HEAD); else echo 'Error: This alias only works on branches that start with feature/*'; fi }; f"
 
   # Find commits by source code
   fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
@@ -51,13 +55,14 @@
 
 [commit]
   template = ~/.gitmessage
-  gpgsign = true
+  # gpgsign = true
 
 [core]
   autocrlf = false
   editor = vim
   excludesfile = ~/.gitignore
   pager = /usr/local/bin/diff-highlight | less
+  fsmonitor = false
 
 [diff]
   renames = copies
@@ -70,11 +75,23 @@
   name = Andrew Klotz
   signingkey = 0xDC7A395217DCF311
 
-[gpg]
-  program = gpg2
+# [gpg]
+#   program = gpg2
 
 [init]
   defaultBranch = main
 
 [pull]
-	rebase = true
+  rebase = true
+
+[credential]
+  helper = /usr/local/share/gcm-core/git-credential-manager
+
+[credential "https://dev.azure.com"]
+  useHttpPath = true
+
+[filter "lfs"]
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
