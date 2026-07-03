@@ -89,15 +89,11 @@ export PATH
 PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
 export PATH
 
-# andorid
-export ANDROID_SDK_HOME="$engine_path/Client/dependencies/android-sdk/"
-export ANDROID_NDK_sHOME="$engine_path/Client/dependencies/android-sdk/ndk"
-export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
-
-
 # Setting PATH for Python 3.10
 # The original version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
-engine_path="/Users/aklotz/git/roblox/game-engine"
-export PATH="$engine_path/Tools/Util:${PATH}"
+
+# Added by declawd
+export PATH="$HOME/.local/bin:$PATH"
+
+[ -f ~/.workrc ] && source ~/.workrc
