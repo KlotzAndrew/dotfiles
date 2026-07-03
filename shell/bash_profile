@@ -45,12 +45,8 @@ fi
 
 # after bash completion https://github.com/junegunn/fzf/issues/872
 # shellcheck source=/dev/null
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-if hash kubectl 2>/dev/null; then
-  # shellcheck source=/dev/null
-  source <(kubectl completion bash)
-fi
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 # shellcheck disable=SC1091
@@ -60,5 +56,48 @@ if [ -f '/Users/andrew/google-cloud-sdk/path.bash.inc' ]; then . '/Users/andrew/
 # shellcheck disable=SC1091
 if [ -f '/Users/andrew/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/andrew/google-cloud-sdk/completion.bash.inc'; fi
 
+source ~/.env_secrets
+
 # shellcheck disable=SC1090
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+ln -s /usr/local/bin/python3 /usr/local/bin/python &>/dev/null || true
+ln -s /usr/local/bin/pip3 /usr/local/bin/pip &>/dev/null || true
+
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+ulimit -n 200000
+ulimit -u 2048
+
+# eval "$(jenv init -)"
+# jenv enable-plugin export
+export PATH="$HOME/.jenv/bin:$PATH"
+. "$HOME/.cargo/env"
+
+. "$HOME/.atuin/bin/env"
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"
+
+# Setting PATH for Python 3.10
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
+export PATH
+
+# Setting PATH for Python 3.10
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
+export PATH
+
+# andorid
+export ANDROID_SDK_HOME="$engine_path/Client/dependencies/android-sdk/"
+export ANDROID_NDK_sHOME="$engine_path/Client/dependencies/android-sdk/ndk"
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
+
+
+# Setting PATH for Python 3.10
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
+engine_path="/Users/aklotz/git/roblox/game-engine"
+export PATH="$engine_path/Tools/Util:${PATH}"
