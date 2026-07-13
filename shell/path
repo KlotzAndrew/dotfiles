@@ -36,13 +36,15 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-# check if nvim exists and echo a message if not
-if ! command -v nvim &> /dev/null; then
-  echo "nvim not found, please install it"
-else
-  editor=$(command -v nvim)
-  export EDITOR=$editor
-fi
+# Prefer nvim as $EDITOR, falling back to vim then vi if it isn't installed.
+for _editor in nvim vim vi; do
+  if command -v "$_editor" &> /dev/null; then
+    EDITOR=$(command -v "$_editor")
+    export EDITOR
+    break
+  fi
+done
+unset _editor
 
 # use a tty for gpg
 # error: gpg failed to sign the data
@@ -62,10 +64,9 @@ fi
 java_dir=$(command -v java)
 export JAVA_HOME="$java_dir"
 
-# Node
-export NVM_DIR="$HOME/.nvm"
-# shellcheck source=/dev/null
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# Node: nvm is initialized at the end of bash_profile instead, so it loads
+# AFTER `brew shellenv` re-prepends /opt/homebrew to PATH. Otherwise Homebrew's
+# npm wins in PATH and nvm warns about its builtin `prefix = /opt/homebrew`.
 
 # shellcheck source=/dev/null
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

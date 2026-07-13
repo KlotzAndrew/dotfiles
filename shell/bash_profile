@@ -1,4 +1,5 @@
-#! /bin/bash
+shell/bash_profile
+g#! /bin/bash
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
@@ -95,5 +96,11 @@ PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
 
 # Added by declawd
 export PATH="$HOME/.local/bin:$PATH"
+
+# Node / nvm — must load AFTER the Homebrew PATH setup above, otherwise
+# Homebrew's npm shadows nvm's and nvm warns about its `prefix = /opt/homebrew`.
+export NVM_DIR="$HOME/.nvm"
+# shellcheck source=/dev/null
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 [ -f ~/.workrc ] && source ~/.workrc

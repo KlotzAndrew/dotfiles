@@ -1,7 +1,3 @@
-[include]
-    path = ~/.gitconfig.monorepo
-    path = ~/.gitconfig.work
-
 [alias]
   alias = !git config -l | grep ^alias | cut -c 7- | sort
   s = status -s
@@ -84,3 +80,8 @@
 
 [pull]
   rebase = true
+
+# Included last so these settings (e.g. user.email) override the defaults above
+[include]
+    path = ~/.gitconfig.monorepo
+    path = ~/.gitconfig.work

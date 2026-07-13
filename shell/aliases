@@ -89,7 +89,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias -- -= "cd -"
+alias -- -="cd -"
 
 # Git aliases
 alias g="git"
@@ -113,7 +113,11 @@ if type nvim > /dev/null 2>&1; then
   alias vim="nvim"
 fi
 
-alias rebash='source ${HOME}/.bashrc'
+# Replace the shell with a fresh login shell rather than re-sourcing into the
+# current (already PATH-polluted) one. Re-sourcing prepends Homebrew in front of
+# nvm again, which triggers nvm's "prefix = /opt/homebrew" warning; a fresh login
+# builds PATH cleanly from scratch.
+alias rebash='exec bash -l'
 
 alias weather='curl wttr.in'
 alias moon='curl wttr.in/Moon'
